@@ -8,7 +8,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 25
         versionCode 202
-        versionName "MA-2.02"
+        versionName "FD-2.02"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -61,7 +61,6 @@ dependencies {
     compile 'com.android.support:design:25.0.1'
     testCompile 'junit:junit:4.12'
     compile project(':zBarBuild')
-    compile project(':PayPalAndroidSDK-2.15.2')
 
     // https://mvnrepository.com/artifact/com.madgag.spongycastle/core
     compile 'com.madgag.spongycastle:core:1.54.0.0'
