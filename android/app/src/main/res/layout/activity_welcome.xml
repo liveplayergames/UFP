@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/splash_frame"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/background_graphic"
+    tools:context="com.bringcommunications.shooter.ShareActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/color_toolbar"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:layout_alignParentTop="true"/>
+
+
+
+    <!-- linear layout for "balance" prompt, balance, refresh button -->
+    <!-- note: android:gravity="center_vertical" in the layout tag will center the layout's children
+         vertically inside the LinearLayout.
+         -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:id="@+id/wallet_layout"
+        android:layout_marginTop="44dp"
+        android:layout_below="@+id/toolbar" >
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" />
+
+
+        <TextView
+            android:text="Balance: "
+            android:textSize="@dimen/balance_text_size_big"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/balance_prompt" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="2" />
+
+        <TextView
+            android:text="0 Finney"
+            android:textSize="@dimen/balance_text_size_big"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:id="@+id/balance"
+            />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="3" />
+
+        <ImageButton
+            android:text="refresh"
+            android:src="@drawable/ic_icon_refresh_128"
+            android:background="?attr/selectableItemBackground"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/refresh_button"
+            android:onClick="do_refresh" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:gravity="center_vertical"	
+        android:layout_marginTop="44dp"
+        android:minHeight="@dimen/header_min_height"	
+        android:textSize="@dimen/header_text_size"	
+        android:textStyle="bold"
+        android:text="Actions"
+        android:background="@color/color_headerbar"
+        android:id="@+id/actions"
+        android:layout_below="@id/wallet_layout"
+        />
+
+
+    <Button
+        android:text="Purchase Finney"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:layout_marginTop="8dp"
+        android:minHeight="@dimen/button_min_height"
+        android:textSize="@dimen/button_text_size_1line"
+        android:id="@+id/purchase_szabo"
+        android:layout_below="@id/actions"
+        android:onClick="do_purchase"
+        android:background="@drawable/button_background"
+        />
+
+    <Button
+        android:text="Send or Receive Finney"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:layout_marginTop="8dp"
+        android:minHeight="@dimen/button_min_height"	
+        android:textSize="@dimen/button_text_size_1line"
+        android:id="@+id/share_szabo"
+        android:layout_below="@id/purchase_szabo"
+        android:onClick="do_share"
+        android:background="@drawable/button_background"
+        />
+
+    <Button
+        android:text="Play Poker"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:layout_marginTop="8dp"
+        android:minHeight="@dimen/button_min_height"
+        android:textSize="@dimen/button_text_size_1line"
+        android:id="@+id/play"
+        android:layout_below="@id/share_szabo"
+        android:onClick="do_play"
+        android:background="@drawable/button_background"
+        />
+
+</RelativeLayout>
+
+    <ImageView
+        android:visibility="visible"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        app:srcCompat="@drawable/splash_graphic"
+        android:id="@+id/splash_graphic" />
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.bringcommunications.shooter.ShareActivity">
+
+        <ImageView
+            android:visibility="invisible"
+            android:src="@drawable/ic_icon_refresh_128"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="88dp"
+            android:id="@+id/refresh"  />
+    </RelativeLayout>
+
+
+</FrameLayout>

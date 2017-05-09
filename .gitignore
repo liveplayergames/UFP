@@ -1,0 +1,9 @@
+*.class
+*~
+*.iml
+android/build/
+android/app/build/
+android/app/src/androidTest/
+android/app/src/test/
+android/local.properties
+

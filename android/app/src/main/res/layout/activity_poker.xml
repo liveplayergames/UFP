@@ -1,0 +1,636 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background_graphic"
+    android:orientation="vertical"
+    >
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_poker_play"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/extra_space_under_card_area"
+    android:background="@color/color_play_background"
+    android:scaleType="centerCrop"
+    android:adjustViewBounds="true"
+    tools:context="com.liveplayergames.finneypoker.PokerActivity">
+
+
+    <!-- opponent cards -->
+    <ImageView
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_card_back"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/opponent_card1"
+        android:layout_toStartOf="@+id/opponent_card1"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:id="@+id/opponent_card0" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_card_back"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/opponent_card1"
+        android:layout_toStartOf="@+id/opponent_card1"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:id="@+id/opponent_card0_front" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_card_back"
+        android:layout_alignBottom="@+id/opponent_card0"
+        android:layout_toLeftOf="@+id/opponent_card2"
+        android:layout_toStartOf="@+id/opponent_card2"
+        android:id="@+id/opponent_card1" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_card_back"
+        android:layout_alignBottom="@+id/opponent_card0"
+        android:layout_toLeftOf="@+id/opponent_card2"
+        android:layout_toStartOf="@+id/opponent_card2"
+        android:id="@+id/opponent_card1_front" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_card_back"
+        android:layout_alignTop="@+id/opponent_card1"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/opponent_card2" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_card_back"
+        android:layout_alignTop="@+id/opponent_card1"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/opponent_card2_front" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_card_back"
+        android:layout_alignTop="@+id/opponent_card2"
+        android:layout_toRightOf="@+id/opponent_card2"
+        android:layout_toEndOf="@+id/opponent_card2"
+        android:id="@+id/opponent_card3" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_card_back"
+        android:layout_alignTop="@+id/opponent_card2"
+        android:layout_toRightOf="@+id/opponent_card2"
+        android:layout_toEndOf="@+id/opponent_card2"
+        android:id="@+id/opponent_card3_front" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_card_back"
+        android:layout_alignTop="@+id/opponent_card3"
+        android:layout_toRightOf="@+id/opponent_card3"
+        android:layout_toEndOf="@+id/opponent_card3"
+        android:id="@+id/opponent_card4" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_card_back"
+        android:layout_alignTop="@+id/opponent_card3"
+        android:layout_toRightOf="@+id/opponent_card3"
+        android:layout_toEndOf="@+id/opponent_card3"
+        android:id="@+id/opponent_card4_front" />
+
+    <!-- opponent timer -->
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/opponent_timer_frame"
+        android:layout_below="@+id/opponent_card0"
+        android:layout_toLeftOf="@+id/pot"
+        android:layout_toRightOf="@+id/opponent_discard2"
+        android:layout_above="@+id/pot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        <com.liveplayergames.finneypoker.Circle
+            android:visibility="invisible"
+            android:id="@+id/opponent_circle"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_width="@dimen/poker_timer_circle_size"
+            android:layout_height="@dimen/poker_timer_circle_size"
+            android:layout_below="@+id/opponent_card0"
+            android:layout_toLeftOf="@+id/pot"
+            android:layout_toRightOf="@+id/opponent_discard2"
+            android:layout_above="@+id/pot"
+            />
+
+<!--
+        was:
+           android:textSize="48px"
+-->
+        <TextView
+            android:visibility="invisible"
+            android:text="60"
+            android:textSize="@dimen/poker_timer_text_size"
+            android:textAlignment="center"
+            android:textColor="@color/color_white"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:id="@+id/opponent_countdown"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/opponent_card0"
+            android:layout_toLeftOf="@+id/pot"
+            android:layout_toRightOf="@+id/opponent_discard2"
+            android:layout_above="@+id/pot"
+            />
+    </FrameLayout>
+
+
+
+    <!-- opponent discards -->
+    <ImageView
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_card_back"
+        android:layout_below="@+id/opponent_card0"
+        android:layout_marginLeft="-20dp"
+        android:layout_marginStart="-20dp"
+        android:layout_marginTop="25dp"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/opponent_discard0" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_card_back"
+        android:layout_below="@+id/opponent_card0"
+        android:layout_marginLeft="-6dp"
+        android:layout_marginStart="-6dp"
+        android:layout_marginTop="39dp"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/opponent_discard1" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_card_back"
+        android:layout_below="@+id/opponent_card0"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="53dp"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/opponent_discard2" />
+
+    <!-- moving card... goes anywhere -->
+    <ImageView
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_card_back"
+        android:layout_below="@+id/opponent_card0"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="53dp"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/moving_card" />
+
+
+    <!-- opponent funds -->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_funds"
+        android:layout_below="@+id/opponent_card0"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="12dp"
+        android:layout_alignParentRight="true"
+        android:id="@+id/opponent_funds" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_coins"
+        android:layout_below="@+id/opponent_card0"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="12dp"
+        android:layout_alignParentRight="true"
+        android:id="@+id/opponent_funds_copy"
+        />
+
+    <!-- pot -->
+    <ImageView
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_coins"
+        android:layout_below="@+id/opponent_funds"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:id="@+id/pot" />
+    <TextView
+        android:visibility="invisible"
+        android:text="0"
+        android:textColor="@color/color_white"
+        android:layout_marginTop="8dp"
+        android:textSize="14sp"
+        android:gravity="left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:id="@+id/pot_balance"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="15dp"
+        android:layout_toRightOf="@id/pot"
+        android:layout_alignBottom="@+id/pot"
+        />
+
+    <!-- deck... offscreen -->
+    <ImageView
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_card_back"
+        android:layout_below="@+id/opponent_funds"
+        android:layout_marginLeft="-80dp"
+        android:layout_marginStart="-80dp"
+        android:layout_marginTop="24dp"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/deck" />
+
+
+    <!-- My funds -->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_funds"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/pot"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:id="@+id/my_funds" />
+
+    <TextView
+        android:text="0"
+        android:layout_marginTop="8dp"
+        android:textSize="14sp"
+        android:textColor="@color/color_white"
+        android:gravity="left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_toRightOf="@+id/my_funds"
+        android:layout_alignBottom="@+id/my_funds"
+        android:layout_alignBaseline="@+id/my_funds"
+        android:id="@+id/my_funds_balance"
+        />
+
+    <ImageView
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_coins"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/pot"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:id="@+id/my_funds_copy" />
+
+
+    <!-- My discards -->
+    <ImageView
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_card_back"
+        android:layout_below="@+id/pot"
+        android:layout_marginRight="-20dp"
+        android:layout_marginEnd="-20dp"
+        android:layout_marginTop="13dp"
+        android:layout_alignParentRight="true"
+        android:id="@+id/my_discard0" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_card_back"
+        android:layout_below="@+id/pot"
+        android:layout_marginRight="-6dp"
+        android:layout_marginEnd="-6dp"
+        android:layout_marginTop="-1dp"
+        android:layout_alignParentRight="true"
+        android:id="@+id/my_discard1" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_card_back"
+        android:layout_below="@+id/pot"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="-15dp"
+        android:layout_alignParentRight="true"
+        android:id="@+id/my_discard2" />
+
+
+
+    <!-- my timer -->
+        <FrameLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/my_timer_frame"
+            android:layout_below="@+id/pot"
+            android:layout_toRightOf="@id/pot"
+            android:layout_toLeftOf="@+id/my_discard2"
+            android:layout_above="@+id/my_card0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+            <com.liveplayergames.finneypoker.Circle
+                android:visibility="invisible"
+                android:id="@+id/my_circle"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_width="@dimen/poker_timer_circle_size"
+                android:layout_height="@dimen/poker_timer_circle_size"
+                android:layout_below="@+id/pot"
+                android:layout_toRightOf="@id/pot"
+                android:layout_toLeftOf="@+id/my_discard2"
+                android:layout_above="@+id/my_card0"
+                />
+
+            <!--
+                    was:
+                       android:textSize="48px"
+            -->
+            <TextView
+                android:visibility="invisible"
+                android:text="60"
+                android:textSize="@dimen/poker_timer_text_size"
+                android:textColor="@color/color_white"
+                android:textAlignment="center"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:id="@+id/my_countdown"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pot"
+                android:layout_toRightOf="@id/pot"
+                android:layout_toLeftOf="@+id/my_discard2"
+                android:layout_above="@+id/my_card0"
+                />
+        </FrameLayout>
+
+
+    <!-- My cards -->
+    <ImageView
+        android:visibility="invisible"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_card_back"
+        android:layout_below="@+id/my_funds"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="12dp"
+        android:layout_toLeftOf="@+id/my_card1"
+        android:layout_toStartOf="@+id/my_card1"
+        android:id="@+id/my_card0" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_card_back"
+        android:layout_below="@+id/my_funds"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="12dp"
+        android:layout_toLeftOf="@+id/my_card1"
+        android:layout_toStartOf="@+id/my_card1"
+        android:id="@+id/my_card0_front" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/my_card2"
+        android:layout_toStartOf="@+id/my_card2"
+        android:layout_alignBottom="@+id/my_card0"
+        app:srcCompat="@drawable/ic_card_back"
+        android:id="@+id/my_card1" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/my_card2"
+        android:layout_toStartOf="@+id/my_card2"
+        android:layout_alignBottom="@+id/my_card0"
+        app:srcCompat="@drawable/ic_card_back"
+        android:id="@+id/my_card1_front" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_card_back"
+        android:layout_alignTop="@+id/my_card1"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/my_card2" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_card_back"
+        android:layout_alignTop="@+id/my_card1"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/my_card2_front" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_card_back"
+        android:layout_alignTop="@+id/my_card2"
+        android:layout_toRightOf="@+id/my_card2"
+        android:layout_toEndOf="@+id/my_card2"
+        android:id="@+id/my_card3" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_card_back"
+        android:layout_alignTop="@+id/my_card2"
+        android:layout_toRightOf="@+id/my_card2"
+        android:layout_toEndOf="@+id/my_card2"
+        android:id="@+id/my_card3_front" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_card_back"
+        android:layout_alignTop="@+id/my_card3"
+        android:layout_toRightOf="@+id/my_card3"
+        android:layout_toEndOf="@+id/my_card3"
+        android:id="@+id/my_card4" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_card_back"
+        android:layout_alignTop="@+id/my_card3"
+        android:layout_toRightOf="@+id/my_card3"
+        android:layout_toEndOf="@+id/my_card3"
+        android:id="@+id/my_card4_front" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/extra_space_under_card_area"
+        />
+
+</RelativeLayout>
+
+  <!-- messages and buttons -->
+  <!--
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_poker_messages"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/activity_poker_play"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        tools:context="com.liveplayergames.finneypoker.PokerActivity">
+-->
+
+
+    <!-- messages -->
+    <TextView
+        android:id="@+id/messages"
+        android:text=""
+        android:textSize="@dimen/poker_msg_size"
+        android:layout_gravity="center"
+        android:layout_weight="2"
+        android:minHeight="@dimen/poker_msg_min_height"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="15dp" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- buttons -->
+    <SeekBar
+	    android:id="@+id/slider"
+        android:visibility="invisible"
+        android:minHeight="@dimen/button_min_height"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+    	android:layout_weight="0"
+        android:thumb="@drawable/ic_thumb"
+        />
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:visibility="invisible"
+            android:text="Place-Bet / Check / Call"
+            android:minHeight="@dimen/button_min_height"
+            android:textSize="@dimen/button_text_size_1line"	    
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+    	    android:layout_weight="1"
+            android:textAlignment="center"
+            android:onClick="do_bet"
+            android:id="@+id/bet"
+            android:background="@drawable/button_background" />
+
+        <Button
+            android:visibility="invisible"
+            android:text="Fold"
+            android:minHeight="@dimen/button_min_height"
+            android:textSize="@dimen/button_text_size_1line"
+            android:layout_marginTop="@dimen/poker_inter_button_space"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+	        android:layout_weight="1"
+            android:textAlignment="center"
+            android:onClick="do_fold"
+            android:id="@+id/fold"
+            android:background="@drawable/button_background"
+            />
+    </LinearLayout>
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+
+</android.support.v7.widget.LinearLayoutCompat>
