@@ -157,10 +157,10 @@ An error was encountered while processing your purchase:
 <string name="purchase_not_sup_title">Purchase Not Supported</string>
 <string name="purchase_not_sup_msg">
 In-app sales of Finney (thousandth\'s of an Ether) is not supported in this version of Uncle Finney\'s Poker.
-Howvever Uncle Finney\'s Poker contains a general-purpose Ether Wallet (Send or Receive Finney). You can purchase
-Ether from a cryptocurrency exchange, such as coinbase.com. Then you can transfer Ether into your Ether Wallet.
-Simply go to (Send or Receive Finney), and select RECEIVE. Then use the SHARE bitton to send yourself your
-Uncle Finney\'s Poker wallet address. When you transfer Ether to that address it will appear in your Uncle Finney\'s
+However Uncle Finney\'s Poker contains a general-purpose Ether Wallet (Send-or-Receive-Finney). You can purchase
+Ether from a cryptocurrency exchange, such as coinbase.com; Then you can transfer Ether into your Ether Wallet.
+Simply go to Send-or-Receive-Finney, and select RECEIVE. Then use the SHARE button to send your wallet address
+to yourself, for example via email. When you transfer Ether to that address it will appear in your Uncle Finney\'s
 Poker balance.
 </string>
 
