@@ -8,7 +8,6 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/PayPalAndroidSDK-2.15.2" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/ethereumj-core" />
             <option value="$PROJECT_DIR$/zBarBuild" />
