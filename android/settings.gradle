@@ -1,1 +1,1 @@
-include ':app', ':PayPalAndroidSDK-2.15.2', ':zBarBuild', ':ethereumj-core'
+include ':app', ':zBarBuild', ':ethereumj-core'
