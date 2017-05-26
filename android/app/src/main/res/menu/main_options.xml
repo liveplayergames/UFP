@@ -10,6 +10,8 @@
         android:title="Import Account" />
     <item android:id="@+id/export_account"
         android:title="Export Account" />
+    <item android:id="@+id/manual_send"
+        android:title="Send with Manual Entry" />
     <item android:id="@+id/welcome"
         android:title="Welcome Message" />
 </menu>

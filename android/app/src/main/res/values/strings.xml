@@ -113,6 +113,21 @@ to import.
 \n\nHint: To get a QR code for the private key for your account, you can visit
 https://www.myetherwallet.com and select the view-wallet-info tab.
 </string>
+<string name="enter_addr_title">
+Enter Recipient\'s Address
+</string>
+<string name="enter_addr_prompt">
+Enter the recipient\'s address. Except in times of desperation, it is strongly
+recommended that you copy-and-paste the address instead of attempting to type it
+in.
+\n\nWarning: If you type an address incorrectly you may lose the funds that you send!
+</string>
+<string name="enter_key_title">
+Enter Provate Key
+</string>
+<string name="enter_key_prompt">
+Enter the private key for the account that you want to import.
+</string>
 <string name="ask_delete_old_key">
 Uncle Finney\'s Poker only supports a single account. If you import a new
 account, then you erase your current account &#8212; (the account still exists,

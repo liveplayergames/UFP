@@ -10,6 +10,7 @@
 */
 
 
+  import android.content.Context;
   import android.content.DialogInterface;
   import android.content.Intent;
   import android.content.SharedPreferences;
@@ -22,6 +23,9 @@
   import android.support.v7.app.AlertDialog;
   import android.support.v7.app.AppCompatActivity;
   import android.support.v7.widget.Toolbar;
+  import android.text.InputFilter;
+  import android.text.InputType;
+  import android.text.Spanned;
   import android.view.Menu;
   import android.view.MenuInflater;
   import android.view.MenuItem;
@@ -29,6 +33,8 @@
   import android.view.animation.AlphaAnimation;
   import android.view.animation.Animation;
   import android.view.animation.AnimationUtils;
+  import android.view.inputmethod.InputMethodManager;
+  import android.widget.EditText;
   import android.widget.FrameLayout;
   import android.widget.ImageButton;
   import android.widget.ImageView;
@@ -39,6 +45,8 @@
   import org.spongycastle.util.encoders.Hex;
 
   import java.math.BigInteger;
+
+  import static android.content.DialogInterface.BUTTON_POSITIVE;
 
 
   public class ShareActivity extends AppCompatActivity implements Payment_Processor_Client {
@@ -143,6 +151,11 @@
           Intent intent = new Intent(this, ReceiveActivity.class);
           intent.putExtra("SHOW_PRIVATE", true);
           startActivity(intent);
+          return true;
+        case R.id.manual_send:
+          String title = getResources().getString(R.string.enter_addr_title);
+          String msg = getResources().getString(R.string.enter_addr_prompt);
+          do_manual_entry(title, msg);
           return true;
         case R.id.welcome:
           show_welcome_dialog();
@@ -390,6 +403,61 @@
       intent.putExtra("SCAN_PROMPT", scan_addr_prompt);
       intent.putExtra("TARGET_ACTIVITY", "SendActivity");
       startActivity(intent);
+    }
+
+
+    private void do_manual_entry(String title, String msg) {
+      EditText input = new EditText(this);
+      // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+      input.setInputType(InputType.TYPE_CLASS_TEXT);
+      InputFilter filter = new InputFilter() {
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+          String filtered = "";
+          boolean do_replace = false;
+          for (int i = start; i < end; i++) {
+            char character = source.charAt(i);
+            if ((character == 'x' || character == 'X') ||
+                    (character >= '0' && character <= '9') ||
+                    (character >= 'a' && character <= 'f') || (character >= 'A' && character <= 'F')) {
+              filtered += character;
+            } else {
+              do_replace = true;
+            }
+          }
+          return(do_replace ? filtered : null);
+        }
+
+      };
+      input.setFilters(new InputFilter[] { filter });
+      ShareActivity.Handle_Manual_Entry handle_manual_entry = new ShareActivity.Handle_Manual_Entry(input);
+      android.support.v7.app.AlertDialog.Builder alert_dialog_builder = new android.support.v7.app.AlertDialog.Builder(context);
+      alert_dialog_builder.setTitle(title);
+      alert_dialog_builder.setMessage(msg);
+      alert_dialog_builder.setPositiveButton(getResources().getString(R.string.OK), handle_manual_entry);
+      alert_dialog_builder.setView(input);
+      android.support.v7.app.AlertDialog dialog;
+      dialog = alert_dialog_builder.create();
+      dialog.show();
+    }
+
+    private class Handle_Manual_Entry implements DialogInterface.OnClickListener {
+      final EditText input;
+      Handle_Manual_Entry(final EditText input) {
+        this.input = input;
+      }
+      public void onClick(DialogInterface dialog, int id) {
+        switch (id) {
+          case BUTTON_POSITIVE:
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(input.getWindowToken(), 0);
+            String data = input.getText().toString();
+            dialog.cancel();
+            System.out.println("manual entry data = " + data);
+            if (ScanActivity.handle_scanned_data(context, "SendActivity", data));
+              finish();
+            break;
+        }
+      }
     }
 
 

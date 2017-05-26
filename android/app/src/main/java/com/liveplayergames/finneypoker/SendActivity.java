@@ -173,7 +173,8 @@ public class SendActivity extends AppCompatActivity implements Payment_Processor
 
     //
     //sanity check
-    if (to_addr.length() != 42) {
+    if (!to_addr.startsWith("0x") || to_addr.length() != 42) {
+      Toast.makeText(context, getResources().getString(R.string.recipient_invalid_length_is) + " " + to_addr.length(), Toast.LENGTH_LONG).show();
       this.finish();
     }
   }
