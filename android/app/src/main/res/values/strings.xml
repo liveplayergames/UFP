@@ -166,6 +166,9 @@ Poker balance.
 
   <!-- new-game messages -->
 <string name="newgame_subtitle">Choose a Table</string>
+<string name="retrieving_table_parms">retrieving betting options</string>
+<string name="failed_to_retrieve_table_parms">failed to retrieve betting options</string>
+<string name="error_parsing_table_parms">error parsing betting options</string>
 <string name="synced_with_blockchain">synced with blockchain</string>
 <string name="transactions_maybe_pending">(un-posted transactions may still be pending)</string>
 <string name="at_the_started_table">at the Starter table</string>

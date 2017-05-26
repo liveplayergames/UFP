@@ -52,18 +52,9 @@ import static android.content.DialogInterface.BUTTON_POSITIVE;
 /**
  * Created by dbrosen on 12/10/16.
  */
-public class NewGameActivity extends AppCompatActivity implements Payment_Processor_Client {
+public class NewGameActivity extends AppCompatActivity implements Payment_Processor_Client, HTTP_Query_Client {
 
-    //denomimation is in finnys
-    private static final long min_wager_practice  =   10; //
-    private static final long max_wager_practice  =   10; //
-    private static final long min_wager_real      =  100; //
-    private static final long max_wager_real      =  100; //$1
-    private static final long min_wager_pro       = 2500; //
-    private static final long max_wager_pro       = 2500; //$25
     private static final int  MAX_SAVED_GROUP_NAMES = 3;
-
-
     private SharedPreferences preferences;
     private FrameLayout overlay_frame_layout;
     private View activity_main_view;
@@ -74,7 +65,10 @@ public class NewGameActivity extends AppCompatActivity implements Payment_Proces
     private boolean show_fees_advisory = true;
     private boolean show_payout_advisory = true;
     private boolean show_payout_payout_pending_toast = false;
+    private boolean requested_table_parms = false;
+
     String[] saved_group_names = null;
+    private static long[] max_raises = null; //practice table, intermediate table, high-roller table
     private static CountDownTimer refresh_winnings_timer = null;
     //these defines are for our handle_message fcn, which displays dialogs on behalf of other threads (payment_processor)
     private static final int HANDLE_BALANCE_CALLBACK = 1;
@@ -99,6 +93,8 @@ public class NewGameActivity extends AppCompatActivity implements Payment_Proces
         acct_addr = preferences.getString("acct_addr", "");
         show_fees_advisory = preferences.getBoolean("show_fees_advisory", true);
         show_payout_advisory = preferences.getBoolean("show_payout_advisory", true);
+        max_raises = new long[3];
+        max_raises[0] = max_raises[1] = max_raises[2] = 0;
         String group_name0 = preferences.getString("saved_group_name0", "");
         String group_name1 = preferences.getString("saved_group_name1", "");
         String group_name2 = preferences.getString("saved_group_name2", "");
@@ -126,18 +122,6 @@ public class NewGameActivity extends AppCompatActivity implements Payment_Proces
             old_group_button.setVisibility(View.VISIBLE);
         }
 
-        Button practice_button = (Button)findViewById(R.id.play_for_practice);
-        String practice_str = getResources().getString(R.string.play_for_practice);
-        practice_str = practice_str.replace("WAGER", max_wager_practice + " Finney");
-        practice_button.setText(practice_str);
-        Button real_button = (Button)findViewById(R.id.play_for_real);
-        String real_str = getResources().getString(R.string.play_for_real);
-        real_str = real_str.replace("WAGER", max_wager_real + " Finney");
-        real_button.setText(real_str);
-        Button pro_button = (Button)findViewById(R.id.play_with_pros);
-        String pro_str = getResources().getString(R.string.play_with_pros);
-        pro_str = pro_str.replace("WAGER", max_wager_pro + " Finney");
-        pro_button.setText(pro_str);
         if (show_fees_advisory)
             show_html_alert(R.string.fees_advisory_title, R.string.fees_advisory);
         //
@@ -246,6 +230,25 @@ public class NewGameActivity extends AppCompatActivity implements Payment_Proces
         boolean tx_err_occurred = preferences.getBoolean("tx_err_occurred", false);
         if (balance != verified_balance || tx_err_occurred)
             do_refresh(null);
+	//get table parms
+        //only need to do this until the purchase has been sent. once we get back the
+        //purchase response we will exit. but avoid re-retreiving the pricelist in case
+        //we redraw the screen before we exit.
+        if (!requested_table_parms) {
+	    set_button_strings(false);	  
+            if (toast != null)
+                toast.cancel();
+            (toast = Toast.makeText(context, getResources().getString(R.string.retrieving_table_parms), Toast.LENGTH_LONG)).show();
+            String server = getResources().getString(R.string.player_server);
+            String table_parms_URL = server + "/table_parms";
+            String parms[] = new String[2];
+            parms[0] = table_parms_URL;
+            parms[1] = "table_parms";
+            new HTTP_Query_Task(this, context).execute(parms);
+        }
+	
+	
+	//deal with payout advisory if necessary
         boolean show_payout_advisory = preferences.getBoolean("show_payout_advisory", true);
         boolean need_payout_advisory = preferences.getBoolean("need_payout_advisory", false);
         SharedPreferences.Editor preferences_editor = preferences.edit();
@@ -300,7 +303,7 @@ public class NewGameActivity extends AppCompatActivity implements Payment_Proces
         super.onStop();
     }
 
-
+  
     public void do_help(View view) {
         show_ok_dialog(R.string.new_game_help_title, R.string.new_game_help);
     }
@@ -323,7 +326,26 @@ public class NewGameActivity extends AppCompatActivity implements Payment_Proces
             Payment_Processor.refresh_balance(this, context);
     }
 
-    private void dsp_balance() {
+    private void set_button_strings(boolean show) {
+      int vis_flag = show ? View.VISIBLE : View.INVISIBLE;
+      Button practice_button = (Button)findViewById(R.id.play_for_practice);
+      String practice_str = getResources().getString(R.string.play_for_practice);
+      practice_str = practice_str.replace("WAGER", max_raises[0] + " Finney");
+      practice_button.setText(practice_str);
+      practice_button.setVisibility(vis_flag);
+      Button real_button = (Button)findViewById(R.id.play_for_real);
+      String real_str = getResources().getString(R.string.play_for_real);
+      real_str = real_str.replace("WAGER", max_raises[1] + " Finney");
+      real_button.setText(real_str);
+      real_button.setVisibility(vis_flag);
+      Button pro_button = (Button)findViewById(R.id.play_with_pros);
+      String pro_str = getResources().getString(R.string.play_with_pros);
+      pro_str = pro_str.replace("WAGER", max_raises[2] + " Finney");
+      pro_button.setText(pro_str);
+      pro_button.setVisibility(vis_flag);
+    }
+
+  private void dsp_balance() {
         long szabo_balance = preferences.getLong("balance", 0);
         long finney_balance = (szabo_balance + Util.SZABO_PER_FINNEY/2) / Util.SZABO_PER_FINNEY;
         TextView balance_view = (TextView) findViewById(R.id.finney_balance);
@@ -345,10 +367,10 @@ public class NewGameActivity extends AppCompatActivity implements Payment_Proces
         int bal_min_wager_multiple = (int)getResources().getInteger(R.integer.bal_min_wager_multiple);
         long szabo_balance = preferences.getLong("balance", 0);
         long finney_balance = (szabo_balance + Util.SZABO_PER_FINNEY/2) / Util.SZABO_PER_FINNEY;
-        if (finney_balance < bal_min_wager_multiple * min_wager_practice) {
+        if (finney_balance < bal_min_wager_multiple * max_raises[0]) {
             String msg = getResources().getString(R.string.new_game_bal_too_low);
             msg = msg.replace("BAL_MULTIPLE", String.valueOf(bal_min_wager_multiple));
-            msg = msg.replace("MIN_WAGER", String.valueOf(min_wager_practice));
+            msg = msg.replace("MIN_WAGER", String.valueOf(max_raises[0]));
             msg = msg.replace("WHAT_TO_DO", getResources().getString(R.string.get_more_finney));
             show_ok_dialog(getResources().getString(R.string.balance_too_low_title), msg);
             return;
@@ -359,8 +381,8 @@ public class NewGameActivity extends AppCompatActivity implements Payment_Proces
         }
         Intent intent = new Intent(this, SelectOpponentActivity.class);
         intent.putExtra("PLAYING_MSG", getResources().getString(R.string.at_the_started_table));
-        intent.putExtra("MIN_WAGER", min_wager_practice);
-        intent.putExtra("MAX_WAGER", max_wager_practice);
+        intent.putExtra("MIN_WAGER", max_raises[0]);
+        intent.putExtra("MAX_WAGER", max_raises[0]);
         startActivity(intent);
     }
     public void do_play_for_real(View view) {
@@ -369,10 +391,10 @@ public class NewGameActivity extends AppCompatActivity implements Payment_Proces
         int bal_min_wager_multiple = (int)getResources().getInteger(R.integer.bal_min_wager_multiple);
         long szabo_balance = preferences.getLong("balance", 0);
         long finney_balance = (szabo_balance + Util.SZABO_PER_FINNEY/2) / Util.SZABO_PER_FINNEY;
-        if (finney_balance < bal_min_wager_multiple * min_wager_real) {
+        if (finney_balance < bal_min_wager_multiple * max_raises[1]) {
             String msg = getResources().getString(R.string.new_game_bal_too_low);
             msg = msg.replace("BAL_MULTIPLE", String.valueOf(bal_min_wager_multiple));
-            msg = msg.replace("MIN_WAGER", String.valueOf(min_wager_real));
+            msg = msg.replace("MIN_WAGER", String.valueOf(max_raises[1]));
             msg = msg.replace("WHAT_TO_DO", getResources().getString(R.string.go_to_a_different_table));
             show_ok_dialog(getResources().getString(R.string.balance_too_low_title), msg);
             return;
@@ -383,8 +405,8 @@ public class NewGameActivity extends AppCompatActivity implements Payment_Proces
         }
         Intent intent = new Intent(this, SelectOpponentActivity.class);
         intent.putExtra("PLAYING_MSG", getResources().getString(R.string.at_the_intermediate_table));
-        intent.putExtra("MIN_WAGER", min_wager_real);
-        intent.putExtra("MAX_WAGER", max_wager_real);
+        intent.putExtra("MIN_WAGER", max_raises[1]);
+        intent.putExtra("MAX_WAGER", max_raises[1]);
         startActivity(intent);
     }
     public void do_play_with_pros(View view) {
@@ -393,10 +415,10 @@ public class NewGameActivity extends AppCompatActivity implements Payment_Proces
         int bal_min_wager_multiple = (int)getResources().getInteger(R.integer.bal_min_wager_multiple);
         long szabo_balance = preferences.getLong("balance", 0);
         long finney_balance = (szabo_balance + Util.SZABO_PER_FINNEY/2) / Util.SZABO_PER_FINNEY;
-        if (finney_balance < bal_min_wager_multiple * min_wager_pro) {
+        if (finney_balance < bal_min_wager_multiple * max_raises[2]) {
             String msg = getResources().getString(R.string.new_game_bal_too_low);
             msg = msg.replace("BAL_MULTIPLE", String.valueOf(bal_min_wager_multiple));
-            msg = msg.replace("MIN_WAGER", String.valueOf(min_wager_pro));
+            msg = msg.replace("MIN_WAGER", String.valueOf(max_raises[2]));
             msg = msg.replace("WHAT_TO_DO", getResources().getString(R.string.go_to_a_different_table));
             show_ok_dialog(getResources().getString(R.string.balance_too_low_title), msg);
             return;
@@ -407,8 +429,8 @@ public class NewGameActivity extends AppCompatActivity implements Payment_Proces
         }
         Intent intent = new Intent(this, SelectOpponentActivity.class);
         intent.putExtra("PLAYING_MSG", getResources().getString(R.string.at_the_high_roller_table));
-        intent.putExtra("MIN_WAGER", min_wager_pro);
-        intent.putExtra("MAX_WAGER", max_wager_pro);
+        intent.putExtra("MIN_WAGER", max_raises[2]);
+        intent.putExtra("MAX_WAGER", max_raises[2]);
         startActivity(intent);
     }
 
@@ -418,10 +440,10 @@ public class NewGameActivity extends AppCompatActivity implements Payment_Proces
         int bal_min_wager_multiple = (int)getResources().getInteger(R.integer.bal_min_wager_multiple);
         long szabo_balance = preferences.getLong("balance", 0);
         long finney_balance = (szabo_balance + Util.SZABO_PER_FINNEY/2) / Util.SZABO_PER_FINNEY;
-        if (finney_balance < bal_min_wager_multiple * min_wager_practice) {
+        if (finney_balance < bal_min_wager_multiple * max_raises[0]) {
             String msg = getResources().getString(R.string.new_game_bal_too_low);
             msg = msg.replace("BAL_MULTIPLE", String.valueOf(bal_min_wager_multiple));
-            msg = msg.replace("MIN_WAGER", getResources().getString(R.string.minimum_is) + " " + String.valueOf(min_wager_practice));
+            msg = msg.replace("MIN_WAGER", getResources().getString(R.string.minimum_is) + " " + String.valueOf(max_raises[0]));
             msg = msg.replace("WHAT_TO_DO", getResources().getString(R.string.get_more_finney));
             show_ok_dialog(getResources().getString(R.string.balance_too_low_title), msg);
             return;
@@ -467,10 +489,10 @@ public class NewGameActivity extends AppCompatActivity implements Payment_Proces
         int bal_min_wager_multiple = (int)getResources().getInteger(R.integer.bal_min_wager_multiple);
         long szabo_balance = preferences.getLong("balance", 0);
         long finney_balance = (szabo_balance + Util.SZABO_PER_FINNEY/2) / Util.SZABO_PER_FINNEY;
-        if (finney_balance < bal_min_wager_multiple * min_wager_practice) {
+        if (finney_balance < bal_min_wager_multiple * max_raises[0]) {
             String msg = getResources().getString(R.string.new_game_bal_too_low);
             msg = msg.replace("BAL_MULTIPLE", String.valueOf(bal_min_wager_multiple));
-            msg = msg.replace("MIN_WAGER", getResources().getString(R.string.minimum_is) + " " + String.valueOf(min_wager_practice));
+            msg = msg.replace("MIN_WAGER", getResources().getString(R.string.minimum_is) + " " + String.valueOf(max_raises[0]));
             msg = msg.replace("WHAT_TO_DO", getResources().getString(R.string.get_more_finney));
             show_ok_dialog(getResources().getString(R.string.balance_too_low_title), msg);
             return;
@@ -557,11 +579,11 @@ public class NewGameActivity extends AppCompatActivity implements Payment_Proces
                     refresh_winnings_timer = null;
                 }
                 Intent intent = new Intent(context, SelectOpponentActivity.class);
-                //the playeing message will be displayed when asking the user to propose a wager. the message will be:
+                //the playing message will be displayed when asking the user to propose a wager. the message will be:
                 //"You are playing PLAYING_MSG"
                 intent.putExtra("PLAYING_MSG", getResources().getString(R.string.with_group) + " " + group_name);
-                intent.putExtra("MIN_WAGER", min_wager_practice);
-                intent.putExtra("MAX_WAGER", max_wager_pro);
+                intent.putExtra("MIN_WAGER", max_raises[0]);
+                intent.putExtra("MAX_WAGER", max_raises[2]);
                 startActivity(intent);
             }
 	        break;
@@ -586,11 +608,11 @@ public class NewGameActivity extends AppCompatActivity implements Payment_Proces
                             refresh_winnings_timer = null;
                         }
                         Intent intent = new Intent(context, SelectOpponentActivity.class);
-                        //the playeing message will be displayed when asking the user to propose a wager. the message will be:
+                        //the playing message will be displayed when asking the user to propose a wager. the message will be:
                         //"You are playing PLAYING_MSG"
                         intent.putExtra("PLAYING_MSG", getResources().getString(R.string.with_group) + " " + group_name);
-                        intent.putExtra("MIN_WAGER", min_wager_practice);
-                        intent.putExtra("MAX_WAGER", max_wager_pro);
+                        intent.putExtra("MIN_WAGER", max_raises[0]);
+                        intent.putExtra("MAX_WAGER", max_raises[2]);
                         startActivity(intent);
                     }
                     break;
@@ -646,6 +668,73 @@ public class NewGameActivity extends AppCompatActivity implements Payment_Proces
                 });
         AlertDialog alert_dialog = alert_dialog_builder.create();
         alert_dialog.show();
+    }
+
+    private void show_err_and_exit_dialog(String title, String msg, final boolean do_exit) {
+        android.support.v7.app.AlertDialog.Builder alert_dialog_builder = new android.support.v7.app.AlertDialog.Builder(context);
+        alert_dialog_builder.setTitle(title);
+        alert_dialog_builder.setMessage(msg);
+        alert_dialog_builder.setCancelable(false);
+        alert_dialog_builder.setNeutralButton(getResources().getString(R.string.OK),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        dialog.cancel();
+                        if (do_exit)
+                            finish();
+                    }
+                });
+        android.support.v7.app.AlertDialog dialog;
+        dialog = alert_dialog_builder.create();
+        dialog.show();
+    }
+
+    
+    public void handle_http_rsp(String callback, String rsp) {
+        if (callback.equals("table_parms")) {
+            if (toast != null)
+                toast.cancel();
+            if (rsp.isEmpty()) {
+                (toast = Toast.makeText(context, getResources().getString(R.string.error_check_connection), Toast.LENGTH_LONG)).show();
+                String title = getResources().getString(R.string.no_internet_title);
+                String msg = getResources().getString(R.string.no_internet);
+                String error = getResources().getString(R.string.failed_to_retrieve_table_parms);
+                msg = msg.replace("ERROR", error);
+                show_err_and_exit_dialog(title, msg, true);
+            } else {
+                int idx = 0;
+                String status = Util.json_parse(rsp, "status");
+                String msg = Util.json_parse(rsp, "msg");
+                String title = Util.json_parse(rsp, "title");
+                for (int i = 0; i < 3; ++i) {
+                    if (rsp.contains("table" + i)) {
+                        idx = rsp.indexOf("table") + 6;
+                        rsp = rsp.substring(idx);
+                    } else {
+                        System.out.println("error parsing table parms, looking for table " + i + ": " + rsp);
+                        break;
+                    }
+                    int max_raise = 0;
+                    String maxraise_str = Util.json_parse(rsp, "maxraise");
+                    try {
+                        max_raise = Integer.valueOf(maxraise_str);
+                    } catch (NumberFormatException e) {
+                        System.out.println("error parsing table parms, table " + i + ": " + rsp);
+                    }
+                    max_raises[i] = max_raise;
+                }
+                if (max_raises[0] <= 0 || max_raises[1] <= 0 || max_raises[2] <= 0) {
+                    if (msg.isEmpty())
+                        msg = getResources().getString(R.string.error_parsing_table_parms);
+                    if (title.isEmpty())
+                        title = getResources().getString(R.string.Server_Error);
+                    show_err_and_exit_dialog(title, msg, true);
+                } else {
+		    set_button_strings(true);
+                }
+            }
+            return;
+        }
+        return;
     }
 
 
