@@ -453,6 +453,9 @@ paying a bill at a restaurant, you might enter your table number here.
   <string name="transaction_sent">
 Transaction Sent
 </string>
+  <string name="exceed_max_send_size">
+Cannot send more than MAXETH ETH
+</string>
 <string name="retrieving_transactions">retrieving transactions</string>
 <string name="Payments_Sent">Payments Sent</string>
 <string name="Payments_Received">Payments Received</string>

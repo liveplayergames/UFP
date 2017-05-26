@@ -302,6 +302,13 @@ public class SendActivity extends AppCompatActivity implements Payment_Processor
           Toast.makeText(context, getResources().getString(R.string.cant_send_zero), Toast.LENGTH_LONG).show();
           return;
       }
+      if (eth_size > 9.0) {
+        //cuz we convert to long, max long is 92... 64 bits just enough for 9 ETH in wei
+        String msg = getResources().getString(R.string.exceed_max_send_size);
+        msg = msg.replace("MAXETH", "9");
+        Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+        return;
+      }
       if (show_gas) {
         TextView gas_view = (TextView) findViewById(R.id.gas);
         String gas_limit_str = gas_view.getText().toString().trim();
