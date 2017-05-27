@@ -67,6 +67,7 @@ public class NewGameActivity extends AppCompatActivity implements Payment_Proces
     private boolean show_payout_payout_pending_toast = false;
     private boolean requested_table_parms = false;
 
+    int saved_group_cnt = 0;
     String[] saved_group_names = null;
     private static long[] max_raises = null; //practice table, intermediate table, high-roller table
     private static CountDownTimer refresh_winnings_timer = null;
@@ -98,28 +99,26 @@ public class NewGameActivity extends AppCompatActivity implements Payment_Proces
         String group_name0 = preferences.getString("saved_group_name0", "");
         String group_name1 = preferences.getString("saved_group_name1", "");
         String group_name2 = preferences.getString("saved_group_name2", "");
-        int group_cnt = 0;
+        saved_group_cnt = 0;
         if (!group_name0.isEmpty()) {
-            ++group_cnt;
+            ++saved_group_cnt;
             if (!group_name1.isEmpty()) {
-                ++group_cnt;
+                ++saved_group_cnt;
                 if (!group_name2.isEmpty())
-                    ++group_cnt;
+                    ++saved_group_cnt;
             }
         }
         Button old_group_button = (Button)findViewById(R.id.play_old_group);
-        if (group_cnt == 0) {
-            old_group_button.setVisibility(View.INVISIBLE);
-        } else {
-            saved_group_names = new String[group_cnt];
+        old_group_button.setVisibility(View.INVISIBLE);
+        if (saved_group_cnt != 0) {
+            saved_group_names = new String[saved_group_cnt];
             saved_group_names[0] = group_name0;
-            if (group_cnt > 1) {
+            if (saved_group_cnt > 1) {
                 saved_group_names[1] = group_name1;
-                if (group_cnt > 2) {
+                if (saved_group_cnt > 2) {
                     saved_group_names[2] = group_name2;
                 }
             }
-            old_group_button.setVisibility(View.VISIBLE);
         }
 
         if (show_fees_advisory)
@@ -230,12 +229,12 @@ public class NewGameActivity extends AppCompatActivity implements Payment_Proces
         boolean tx_err_occurred = preferences.getBoolean("tx_err_occurred", false);
         if (balance != verified_balance || tx_err_occurred)
             do_refresh(null);
-	//get table parms
+    	//get table parms
         //only need to do this until the purchase has been sent. once we get back the
         //purchase response we will exit. but avoid re-retreiving the pricelist in case
         //we redraw the screen before we exit.
         if (!requested_table_parms) {
-	    set_button_strings(false);	  
+	        set_button_strings(false);
             if (toast != null)
                 toast.cancel();
             (toast = Toast.makeText(context, getResources().getString(R.string.retrieving_table_parms), Toast.LENGTH_LONG)).show();
@@ -248,7 +247,7 @@ public class NewGameActivity extends AppCompatActivity implements Payment_Proces
         }
 	
 	
-	//deal with payout advisory if necessary
+    	//deal with payout advisory if necessary
         boolean show_payout_advisory = preferences.getBoolean("show_payout_advisory", true);
         boolean need_payout_advisory = preferences.getBoolean("need_payout_advisory", false);
         SharedPreferences.Editor preferences_editor = preferences.edit();
@@ -327,22 +326,28 @@ public class NewGameActivity extends AppCompatActivity implements Payment_Proces
     }
 
     private void set_button_strings(boolean show) {
-      int vis_flag = show ? View.VISIBLE : View.INVISIBLE;
-      Button practice_button = (Button)findViewById(R.id.play_for_practice);
-      String practice_str = getResources().getString(R.string.play_for_practice);
-      practice_str = practice_str.replace("WAGER", max_raises[0] + " Finney");
-      practice_button.setText(practice_str);
-      practice_button.setVisibility(vis_flag);
-      Button real_button = (Button)findViewById(R.id.play_for_real);
-      String real_str = getResources().getString(R.string.play_for_real);
-      real_str = real_str.replace("WAGER", max_raises[1] + " Finney");
-      real_button.setText(real_str);
-      real_button.setVisibility(vis_flag);
-      Button pro_button = (Button)findViewById(R.id.play_with_pros);
-      String pro_str = getResources().getString(R.string.play_with_pros);
-      pro_str = pro_str.replace("WAGER", max_raises[2] + " Finney");
-      pro_button.setText(pro_str);
-      pro_button.setVisibility(vis_flag);
+        int vis_flag = show ? View.VISIBLE : View.INVISIBLE;
+        Button practice_button = (Button)findViewById(R.id.play_for_practice);
+        String practice_str = getResources().getString(R.string.play_for_practice);
+        practice_str = practice_str.replace("WAGER", max_raises[0] + " Finney");
+        practice_button.setText(practice_str);
+        practice_button.setVisibility(vis_flag);
+        Button real_button = (Button)findViewById(R.id.play_for_real);
+        String real_str = getResources().getString(R.string.play_for_real);
+        real_str = real_str.replace("WAGER", max_raises[1] + " Finney");
+        real_button.setText(real_str);
+        real_button.setVisibility(vis_flag);
+        Button pro_button = (Button)findViewById(R.id.play_with_pros);
+        String pro_str = getResources().getString(R.string.play_with_pros);
+        pro_str = pro_str.replace("WAGER", max_raises[2] + " Finney");
+        pro_button.setText(pro_str);
+        pro_button.setVisibility(vis_flag);
+        Button new_group_button = (Button)findViewById(R.id.play_new_group);
+        new_group_button.setVisibility(vis_flag);
+        if (saved_group_cnt > 0 || !show) {
+            Button old_group_button = (Button) findViewById(R.id.play_old_group);
+            old_group_button.setVisibility(vis_flag);
+        }
     }
 
   private void dsp_balance() {
@@ -729,7 +734,7 @@ public class NewGameActivity extends AppCompatActivity implements Payment_Proces
                         title = getResources().getString(R.string.Server_Error);
                     show_err_and_exit_dialog(title, msg, true);
                 } else {
-		    set_button_strings(true);
+		            set_button_strings(true);
                 }
             }
             return;
