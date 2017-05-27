@@ -71,6 +71,7 @@ public class SelectOpponentActivity extends AppCompatActivity implements HTTP_Qu
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
+    //System.out.println("SelectOpponentActivity::onCreate: enter");
     super.onCreate(savedInstanceState);
     overlay_frame_layout = new FrameLayout(getApplicationContext());
     setContentView(overlay_frame_layout);
@@ -192,6 +193,7 @@ public class SelectOpponentActivity extends AppCompatActivity implements HTTP_Qu
 
   @Override
   public void onResume() {
+    //System.out.println("SelectOpponentActivity::onResume: enter");
     super.onResume();  // Always call the superclass method first
     is_finished = false;
     //we need to login again if we create a new socket
@@ -202,7 +204,7 @@ public class SelectOpponentActivity extends AppCompatActivity implements HTTP_Qu
   }
 
   public void onStop() {
-    System.out.println("SelectOpponentActivity: onStop");
+    //System.out.println("SelectOpponentActivity: onStop");
     is_finished = true;
     if (toast != null)
       toast.cancel();
@@ -239,6 +241,7 @@ public class SelectOpponentActivity extends AppCompatActivity implements HTTP_Qu
 
 
   private void login() {
+    System.out.println("SelectOpponentActivity::login: enter");
     String level = playing_msg.replace(' ', '-');
     socket.on("login-ack", on_login_ack);
     String login_msg = "my-id: " + my_id + " username: " + my_username + " level: " + level + " version: " + BuildConfig.VERSION_NAME;

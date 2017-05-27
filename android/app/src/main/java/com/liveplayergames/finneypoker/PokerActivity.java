@@ -622,6 +622,7 @@ public class PokerActivity extends AppCompatActivity implements HTTP_Query_Clien
                         if (!game_over) {
                             //only show message if we hacen't already processed a forfiet
                             game_over = true;
+                            socket = Util.release_player_socket();
                             show_forfeit(do_forfeit.equals("true"), opponent_forfeit.equals("true"), why);
                         }
                         break;
@@ -819,8 +820,8 @@ public class PokerActivity extends AppCompatActivity implements HTTP_Query_Clien
     //onFinishing should return true. perhaps at that time it's best to give it up. note: if the user switches apps
     //(ie. via the multitask button), then isFinishing is false.
     public void onStop() {
-        System.out.println("onStop: isFinishing = " + isFinishing());
-        if (isFinishing())
+        System.out.println("PokerActivity::onStop: isFinishing = " + isFinishing());
+        if (isFinishing() && socket != null)
             socket = Util.release_player_socket();
         super.onStop();  // Always call the superclass method first
     }
@@ -1053,7 +1054,7 @@ public class PokerActivity extends AppCompatActivity implements HTTP_Query_Clien
             bet_view.setVisibility(View.INVISIBLE);
             Button fold_view = (Button) findViewById(R.id.fold);
             fold_view.setVisibility(View.INVISIBLE);
-    		Util.release_player_socket();
+    		socket = Util.release_player_socket();
 		    show_forfeit(true, false, null);
             }
         });
