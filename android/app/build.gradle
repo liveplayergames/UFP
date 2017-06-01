@@ -7,8 +7,8 @@ android {
         applicationId "com.liveplayergames.finneypoker"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 203
-        versionName "FD-2.03"
+        versionCode 204
+        versionName "FD-2.04"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
