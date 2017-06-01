@@ -30,10 +30,9 @@ What\'s New in this Version
 </string>
   <string name="whats_new_msg">
 In this release of Uncle Finney\'s Poker:
-\n\n
-\n\n - set alarms when you are challenged, or when a players come online.
-\n\n - copy-and-paste or manually enter an address to send ETH. This is important
-for sending ETH to a JAXX wallet, since JAXX does not provide a usable QR Code.
+\n\n - Optional alarms when you are challenged, or when players come online.
+\n\n - Copy-and-paste or manually enter an address to send ETH. This is important
+for sending ETH to a Jaxx wallet, since Jaxx does not provide a usable QR Code.
 \n\n - Corrected timing issues on some phones that sometimes prevented the player
 list from being displayed.
   </string>
