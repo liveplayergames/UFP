@@ -296,9 +296,11 @@
                                                           if
                                                           giveaway requested        no giveaway requested
                                                          ----------------------     ---------------------
-                                                         =>show_finney_giveaway     => get_motd
+                                                         =>show_finney_giveaway     => show_whats_new
 
             show_finney_giveaway => inline handler =>
+
+            show_whats_new => inline handler =>
 
             get_motd: if
                     got balance recently  got_balance_sec < 2hrs ago
@@ -673,7 +675,7 @@
                             Message message = message_handler.obtainMessage(SHOW_FINNEY_GIVEAWAY, 0, 0, tandm);
                             message.sendToTarget();
                         } else {
-                            get_motd();
+                            show_whats_new();
                         }
                         return;
                     } else {
@@ -724,6 +726,34 @@
             String title = getResources().getString(R.string.giveaway_title);
             String msg = getResources().getString(R.string.giveaway);
             msg = msg.replace("FINNEY_AMOUNT", free_finney_amount).replace("REASON", free_finney_reason);
+            alert_dialog_builder.setTitle(title);
+            alert_dialog_builder.setMessage(msg);
+            alert_dialog_builder.setCancelable(false);
+            alert_dialog_builder.setNeutralButton(getResources().getString(R.string.OK),
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            dialog.cancel();
+                            show_whats_new();
+                        }
+                    });
+            dialog = alert_dialog_builder.create();
+            dialog.show();
+        }
+
+        private void show_whats_new() {
+            String cur_ver = BuildConfig.VERSION_NAME;
+            String old_ver = preferences.getString("current_version", "");
+            SharedPreferences.Editor preferences_editor = preferences.edit();
+            preferences_editor.putString("current_version", cur_ver);
+            preferences_editor.apply();
+            if (cur_ver.equals(old_ver)) {
+                get_motd();
+                return;
+            }
+            android.support.v7.app.AlertDialog.Builder alert_dialog_builder = new android.support.v7.app.AlertDialog.Builder(context);
+            String title = getResources().getString(R.string.whats_new_title);
+            String msg = getResources().getString(R.string.whats_new_msg);
+            //msg = msg.replace("FINNEY_AMOUNT", free_finney_amount).replace("REASON", free_finney_reason);
             alert_dialog_builder.setTitle(title);
             alert_dialog_builder.setMessage(msg);
             alert_dialog_builder.setCancelable(false);

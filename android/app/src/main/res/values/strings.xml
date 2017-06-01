@@ -25,6 +25,18 @@ Send-or-Receive-Finney page.
 THE USE OF THIS SOFTWARE MIGHT BE ILLIGAL ARE HEREBY PROHIBITED FROM USING THIS SOFTWARE.
 \n\nEnjoy!
 </string>
+  <string name="whats_new_title">
+What\'s New in this Version
+</string>
+  <string name="whats_new_msg">
+In this release of Uncle Finney\'s Poker:
+\n\n
+\n\n - set alarms when you are challenged, or when a players come online.
+\n\n - copy-and-paste or manually enter an address to send ETH. This is important
+for sending ETH to a JAXX wallet, since JAXX does not provide a usable QR Code.
+\n\n - Corrected timing issues on some phones that sometimes prevented the player
+list from being displayed.
+  </string>
   <string name="welcome_help_title">
 About Your Balance
 </string>
