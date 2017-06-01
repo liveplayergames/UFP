@@ -7,4 +7,12 @@
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_help0"
         />
+    <item android:id="@+id/alarm_challenged"
+        android:title="Alarm when Challenged"
+        android:checkable="true"
+        />
+    <item android:id="@+id/alarm_player"
+        android:title="Alarm when Player Appears"
+        android:checkable="true"
+        />
 </menu>

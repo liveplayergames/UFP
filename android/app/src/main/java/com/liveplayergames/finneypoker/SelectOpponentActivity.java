@@ -3,6 +3,9 @@ package com.liveplayergames.finneypoker;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
@@ -57,6 +60,9 @@ public class SelectOpponentActivity extends AppCompatActivity implements HTTP_Qu
   private long reduced_max_wager = 0;
   private boolean refresh_is_in_process = false;
   private boolean is_finished = false;
+  private boolean player_list_was_empty = false;
+  private boolean alarm_when_challenged = false;
+  private boolean alarm_when_player_appears = false;
   private android.support.v7.app.AlertDialog persistent_dialog = null;
   private static CountDownTimer challenge_timer = null;
 
@@ -77,6 +83,10 @@ public class SelectOpponentActivity extends AppCompatActivity implements HTTP_Qu
     setContentView(overlay_frame_layout);
     View activity_select_opponent_view = getLayoutInflater().inflate(R.layout.activity_select_opponent, overlay_frame_layout, false);
     setContentView(activity_select_opponent_view);
+    String app_uri = getResources().getString(R.string.app_uri);
+    preferences = getSharedPreferences(app_uri, MODE_PRIVATE);
+    alarm_when_player_appears = preferences.getBoolean("alarm_when_player_appears", alarm_when_player_appears);
+    alarm_when_challenged = preferences.getBoolean("alarm_when_challenged", alarm_when_challenged);
     Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
     //The internal implementation of the support library just checks if the Toolbar has a title (not null) at the moment the SupportActionBar is
     //set up. If there is, then this title will be used instead of the window title. You can then set a dummy title while you load the real title.
@@ -144,8 +154,6 @@ public class SelectOpponentActivity extends AppCompatActivity implements HTTP_Qu
       }
     };
     //
-    String app_uri = getResources().getString(R.string.app_uri);
-    preferences = getSharedPreferences(app_uri, MODE_PRIVATE);
     my_id = preferences.getString("device_id", "");
     my_username = preferences.getString("username", "");
     long szabo_balance = preferences.getLong("balance", 0);
@@ -164,11 +172,29 @@ public class SelectOpponentActivity extends AppCompatActivity implements HTTP_Qu
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getMenuInflater();
     inflater.inflate(R.menu.select_opponent, menu);
+    menu.findItem(R.id.alarm_challenged).setChecked(alarm_when_challenged);
+    menu.findItem(R.id.alarm_player).setChecked(alarm_when_player_appears);
     return(true);
   }
 
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
+      case R.id.alarm_challenged: {
+        alarm_when_challenged = item.isChecked() ? false : true;
+        item.setChecked(alarm_when_challenged);
+        SharedPreferences.Editor preferences_editor = preferences.edit();
+        preferences_editor.putBoolean("alarm_when_challenged", alarm_when_challenged);
+        preferences_editor.apply();
+        return true;
+      }
+      case R.id.alarm_player: {
+        alarm_when_player_appears = item.isChecked() ? false : true;
+        item.setChecked(alarm_when_player_appears);
+        SharedPreferences.Editor preferences_editor = preferences.edit();
+        preferences_editor.putBoolean("alarm_when_player_appears", alarm_when_player_appears);
+        preferences_editor.apply();
+        return true;
+      }      
       case R.id.help:
         do_help(null);
         return true;
@@ -350,6 +376,7 @@ public class SelectOpponentActivity extends AppCompatActivity implements HTTP_Qu
         //further challenges. so we might receive a refresh message when the opposing player becomes "unavailable". but if we are already
         //engaged to play with him, then we don't want to display "no players are available."
         if (opponent_id.isEmpty()) {
+	  player_list_was_empty = true;
           no_opponents_online();
           (toast = Toast.makeText(context, getResources().getString(R.string.no_opponents), Toast.LENGTH_LONG)).show();
         }
@@ -357,6 +384,10 @@ public class SelectOpponentActivity extends AppCompatActivity implements HTTP_Qu
         if (persistent_dialog != null) {
           persistent_dialog.cancel();
           persistent_dialog = null;
+	  if (player_list_was_empty && alarm_when_player_appears) {
+	    buzz();
+	  }
+	  player_list_was_empty = false;	  
         }
       }
       return;
@@ -586,6 +617,8 @@ public class SelectOpponentActivity extends AppCompatActivity implements HTTP_Qu
       persistent_dialog.cancel();
       persistent_dialog = null;
     }
+    if (alarm_when_challenged)
+      buzz();
     Handle_You_Are_Challanged handle_you_are_challanged = new Handle_You_Are_Challanged(challenger_id, challenger_username, challenger_wager);
     android.support.v7.app.AlertDialog.Builder alert_dialog_builder = new android.support.v7.app.AlertDialog.Builder(context);
     String challenge_str;
@@ -778,6 +811,22 @@ public class SelectOpponentActivity extends AppCompatActivity implements HTTP_Qu
     challenge_timer = null;
   }
 
+
+  private void buzz() {
+    Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+    if (alert == null) {
+      // alert is null, using backup
+      alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+      // I can't see this ever being null (as always have a default notification) but just in case
+      if (alert == null) {
+	// alert backup is null, using 2nd backup
+	alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+      }
+    }
+    Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), alert);
+    r.play();    
+  }
+  
 
   private void start_the_game(boolean i_am_challenger) {
     if (persistent_dialog != null) {
