@@ -403,7 +403,7 @@
                         }
                     });
             dialog = alert_dialog_builder.create();
-            dialog.show();
+             dialog.show();
         }
 
         //this fcn gets the device-id and the username. the two are combineed, cuz in order to get the device id it might be necessary
@@ -753,7 +753,7 @@
             android.support.v7.app.AlertDialog.Builder alert_dialog_builder = new android.support.v7.app.AlertDialog.Builder(context);
             String title = getResources().getString(R.string.whats_new_title);
             String msg = getResources().getString(R.string.whats_new_msg);
-            //msg = msg.replace("FINNEY_AMOUNT", free_finney_amount).replace("REASON", free_finney_reason);
+            title = title.replace("VERSION", cur_ver);
             alert_dialog_builder.setTitle(title);
             alert_dialog_builder.setMessage(msg);
             alert_dialog_builder.setCancelable(false);

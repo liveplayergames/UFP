@@ -43,8 +43,8 @@ import io.socket.emitter.Emitter;
 
 public class PokerActivity extends AppCompatActivity implements HTTP_Query_Client, SeekBar.OnSeekBarChangeListener, Payment_Processor_Client {
 
-    public static final long POKER_BET_NOMINAL_GAS = 51000;
-    public static final long POKER_BET_GAS_LIMIT = 80000;
+    public static final long POKER_BET_NOMINAL_GAS = 50000;
+    public static final long POKER_BET_GAS_LIMIT = 100000;
 
     private long wager = -1;
     private long my_balance = 0;
@@ -58,13 +58,13 @@ public class PokerActivity extends AppCompatActivity implements HTTP_Query_Clien
     private String opponent_id = "";
     private String opponent_username = "";
     private byte[] game_id = null;
+    private boolean lava_is_active = false;
     private boolean i_am_challenger = false;
     private Toast toast = null;
     private PokerActivity context;
     private SharedPreferences preferences;
     private Socket socket = null;
     private Handler socket_emitter_handler = null;
-    private static final String contract_address = "";
     private boolean did_discard = false;
     private boolean game_over = false;
     private boolean i_am_delayed = false;
@@ -129,6 +129,7 @@ public class PokerActivity extends AppCompatActivity implements HTTP_Query_Clien
         boolean start_game = intent.getBooleanExtra("STARTGAME", false);
         intent.putExtra("STARTGAME", false);
         System.out.println("in Oncreate. STARTGAME = " + start_game);
+	lava_is_active = preferences.getBoolean("lava_is_active", false);	
         my_id = preferences.getString("device_id", "");
         my_username = preferences.getString("username", "");
         long szabo_balance = preferences.getLong("balance", 0);
@@ -1334,7 +1335,7 @@ public class PokerActivity extends AppCompatActivity implements HTTP_Query_Clien
         } else {
             ++my_tx_cnt;
             my_tx_total += finneys;
-            String to_addr = getResources().getString(R.string.contract_addr);
+            String to_addr = getResources().getString(lava_is_active ? R.string.lava_contract_addr : R.string.pre_lava_contract_addr);
             long size_wei = finneys * Util.WEI_PER_FINNEY;
             long gas_limit = POKER_BET_GAS_LIMIT;
             Payment_Processor.send(this, context, why_sock_msg, to_addr, size_wei, gas_limit, game_id, true);
