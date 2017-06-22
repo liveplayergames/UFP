@@ -734,19 +734,20 @@ public class NewGameActivity extends AppCompatActivity implements Payment_Proces
                         title = getResources().getString(R.string.Server_Error);
                     show_err_and_exit_dialog(title, msg, true);
                 } else {
-		  set_button_strings(true);
-		  //
-		  //this is our indication that the lava contracts have become active
-		  if (max_raises[0] >= 15) {
-		    boolean lava_is_active = preferences.getBoolean("lava_is_active", false);
-		    if (!lave_is_active) {
-		      SharedPreferences.Editor preferences_editor = preferences.edit();
-		      preferences_editor.putBoolean("lava_is_active", lava_is_active);
-		      preferences_editor.apply();
-		    }
+                    set_button_strings(true);
+                    //
+                    //this is our indication that the lava contracts have become active
+                    if (max_raises[0] >= 11) {
+                        boolean lava_is_active = preferences.getBoolean("lava_is_active", false);
+                        if (!lava_is_active) {
+                            SharedPreferences.Editor preferences_editor = preferences.edit();
+                            preferences_editor.putBoolean("lava_is_active", lava_is_active);
+                            preferences_editor.apply();
+                        }
+                    }
+                    return;
                 }
             }
-            return;
         }
         return;
     }
