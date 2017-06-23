@@ -741,7 +741,7 @@ public class NewGameActivity extends AppCompatActivity implements Payment_Proces
                         boolean lava_is_active = preferences.getBoolean("lava_is_active", false);
                         if (!lava_is_active) {
                             SharedPreferences.Editor preferences_editor = preferences.edit();
-                            preferences_editor.putBoolean("lava_is_active", lava_is_active);
+                            preferences_editor.putBoolean("lava_is_active", true);
                             preferences_editor.apply();
                         }
                     }
