@@ -1,0 +1,798 @@
+<resources>
+<string name="app_name">Uncle Finney\'s Poker</string>
+<string name="app_uri">finneypoker.liveplayergames.com</string>
+<string name="player_server">http://finneypoker.liveplayergames.com:3000</string>
+<string name="lava_contract_addr">0xb56c725467c7eec851b1a4a4222d930932b04e89</string>
+<string name="welcome">
+Uncle Finney\'s Poker is a two-player contest. When you register with our server,
+the game will create a Finney wallet for you. Before each contest, you and your chosen
+opponent agree on the maximum size of each poker bet (in \"Finney\").
+\n\nOnce you have agreed on a maximum bet size, the game-app will deposit an ante equal
+to one quarter of the maximum bet, in a secure, 3rd-party blockchain contract. Similarly,
+each time you bet, you will send your funds to that 3rd-party contract.
+\n\nOnce there is a declared winner of the contest, the blockchain contract will return
+the total pot amount (minus processing fees) to the winner. If there is no winner, for
+example in the highly unlikely case of a game-server crash, or in case the
+internet connection cuts out before the game begins, then the funds are returned to both
+players.
+\n\nNote: Your Finney wallet is maintained entirely on your phone &#8212; our servers do
+not have access to your Finneys. The game server only matches you up with an opponent.
+The game server and its authors have no way to withdraw the wager
+funds &#8212; we can only inform the contract about who is the winner.
+\n\nYou can transfer your Finney from your wallet to other players directly, using the
+Send-or-Receive-Finney page.
+\n\nWARNING: CITIZENS AND RESIDENTS OF THE UNITED STATES AND OTHER COUNTRIES IN WHICH
+THE USE OF THIS SOFTWARE MIGHT BE ILLIGAL ARE HEREBY PROHIBITED FROM USING THIS SOFTWARE.
+\n\nEnjoy!
+</string>
+  <string name="whats_new_title">
+What\'s New in Version VERSION
+</string>
+  <string name="whats_new_msg">
+This version of Uncle Finney\'s Poker is compatible with the E4ROW Lava contract!
+\n\n
+In addition, in this release of Uncle Finney\'s Poker:
+\n\n - Disable poker play if two devices are detected with the same Ether address.
+\n\n - For speed and reliability, we no longer use etherchain.org at all in the game.
+\n\n - Optional alarms when you are challenged, or when players come online.
+\n\n - Copy-and-paste or manually enter an address to send ETH. This is important
+for sending ETH to a Jaxx wallet, since Jaxx does not provide a usable QR Code.
+  </string>
+  <string name="welcome_help_title">
+About Your Balance
+</string>
+  <string name="welcome_help">
+The balance displayed on this screen, when up-to-date, reflects your current balance
+on the blockchain. It does not include transactions that have not yet been accepted
+on the blockchain, which can take up to 5 minutes, depending on network conditions. For
+this reason, the balance, even when synced with the blockchain, may not reflect winnings
+from your most recent game for a few minutes.
+</string>
+<string name="device_id_title">
+We Need to Know Your Phone Device-id
+</string>
+<string name="device_id_rationale">
+We need to access your phone state in order to register you as a unique player in
+our system. We only use your device id; but we are required to ask your permission
+for this. On the next screen we will ask for permission to access your phone info.
+Note: Unfortunately, on some phones the system permission to access the device information
+is bundled with the permission to make calls. We will not make any calls.
+</string>
+  <string name="enter_username_title">
+Enter a Username
+</string>
+  <string name="enter_username">
+Enter a username by which you will be known to other players:
+</string>
+  <string name="username_taken">
+The username that you entered is already taken by a different player. Please
+enter a different username by which you will be known to other players:
+</string>
+<string name="duplicate_account_title">
+Duplicate Account Detected
+</string>
+  <string name="duplicate_account_msg">
+The Ether account that you have imported is already in use by a different player. You
+cannot play poker using the same Ether account on two different devices. In order to
+play, please import a unique Ether account.
+</string>
+  <string name="giveaway_title">
+Finney Giveaway!
+</string>
+  <string name="giveaway">
+To encourage more people to try Uncle Finney\'s Poker, sometimes we
+\n\nGIVE AWAY FREE FINNEY!
+\n\nWe have sent you FINNEY_AMOUNT Finney REASON
+\n\nThe funds will appear in your account within a minute or so.
+\n\nThanks for using Uncle Finney\'s Poker!
+</string>
+<string name="motd_title">
+Note:
+</string>
+  <string name="registering_username">
+Registering your username&#8230;
+</string>
+  <string name="no_acct">
+You have not set up a Finney (Ether) account yet. Before using this app you need
+to import an Ether account using the "import account" menu item.
+</string>
+<string name="share_subtitle">
+Finney Wallet
+</string>
+<!-- subtitle in option bar for receive activity. receive activity is laos used to show qr
+  code for export acct -->
+<string name="receive_subtitle_receive">
+Receive Payment
+</string>
+<string name="receive_subtitle_export">
+Export Account
+</string>
+<string name="receive_err_no_media_access_msg">
+Unable to access media directory
+</string>
+<string name="receive_err_no_media_access_permission">
+We cannot share unless you provide access to external storage
+</string>
+  <!-- subtitle in option bar for scan, send activities. for scan subtitle depends on what we are scanning... -->
+<string name="subtitle_send">
+Send Payment"
+</string>
+<string name="subtitle_import">
+Import Account
+</string>
+<string name="cant_scan_cuz_no_access_msg">
+We cannot scan because we do not have permission to access the camera.
+</string>
+<string name="scan_addr_prompt">
+Scan the QR code that represents the recipient address. Once the recipient
+address has been identified, you will be able to specify the amount of Finney
+(Ether) that you would like to send.
+</string>
+<string name="scan_key_prompt">
+Scan the QR code that represents the private key for the account that you want
+to import.
+\n\nHint: To get a QR code for the private key for your account, you can visit
+https://www.myetherwallet.com and select the view-wallet-info tab.
+</string>
+<string name="enter_addr_title">
+Enter Recipient\'s Address
+</string>
+<string name="enter_addr_prompt">
+Enter the recipient\'s address. Except in times of desperation, it is strongly
+recommended that you copy-and-paste the address instead of attempting to type it
+in.
+\n\nWarning: If you type an address incorrectly you may lose the funds that you send!
+</string>
+<string name="enter_key_title">
+Enter Provate Key
+</string>
+<string name="enter_key_prompt">
+Enter the private key for the account that you want to import.
+</string>
+<string name="ask_delete_old_key">
+Uncle Finney\'s Poker only supports a single account. If you import a new
+account, then you erase your current account &#8212; (the account still exists,
+of course, but you will not be able to access it from Uncle Finney\'s-Poker.)
+\n\nIMPORTANT: if you have any funds in this account, and if you don\'t have
+access to the account from some other wallet, then you should transfer the funds
+before you import a new account. Otherwise you will lose your funds!
+</string>
+
+  <!-- transaction list and payment processor -->
+  <string name="txid">txid</string>
+  <string name="from">from</string>
+  <string name="to">to</string>
+  <string name="balance">balance</string>
+  <string name="encrypting">encrypting</string>
+  <string name="encrypt_err">error encoding transaction!</string>
+  <string name="continuing_refresh">continuing refresh</string>
+  <string name="waiting_for_nonce">waiting_for_nonce</string>
+  <string name="refreshing_nonce">refreshing account status (nonce)&#8230;</string>
+  <string name="refreshing_price">refreshing account status (price)&#8230;</string>
+  <string name="refreshing_balance">refreshing account status (balance)&#8230;</string>
+
+  <!-- purchase messages -->
+<string name="purchase_subtitle">Purchase Finney</string>
+<string name="retrieving_price_list">retrieving price list</string>
+<string name="payment_declined">payment was declined</string>
+<string name="forwarding_payment_confirmation">forwarding payment confirmation</string>
+<string name="payment_cancelled">payment was canceled</string>
+<string name="payment_not_valid">payment was not valid</string>
+<string name="failed_to_retrieve_price_list">failed to retrieve price list</string>
+<string name="error_parsing_price_list">error parsing price list</string>
+<string name="Server_Error">Server Error</string>
+<string name="purchase_complete_title">Purchase Complete</string>
+<string name="purchase_complete_msg">
+Your purchase completed successfully. Please allow one or two minutes for your new Finney to be credited to your account
+</string>
+<string name="purchase_err_title">Unable to Complete Purchase</string>
+<string name="purchase_err_msg">
+An error was encountered while processing your purchase:
+\n\nSTATUS
+</string>
+
+  <!-- new-game messages -->
+<string name="newgame_subtitle">Choose a Table</string>
+<string name="retrieving_table_parms">retrieving betting options</string>
+<string name="failed_to_retrieve_table_parms">failed to retrieve betting options</string>
+<string name="error_parsing_table_parms">error parsing betting options</string>
+<string name="synced_with_blockchain">synced with blockchain</string>
+<string name="transactions_maybe_pending">(un-posted transactions may still be pending)</string>
+<string name="at_the_started_table">at the Starter table</string>
+<string name="at_the_intermediate_table">at the Intermediate table</string>
+<string name="at_the_high_roller_table">at the High-Roller table</string>
+<string name="with_group"></string>
+<string name="minimum_is">minimum is</string>
+<string name="balance_too_low_title">Your Balance is Too Low</string>
+<string name="get_more_finney">you will need to acquire more Finney before you can play</string>
+<string name="go_to_a_different_table">please select a different group to play with</string>
+  <string name="recent_err_wait">
+An error occurred during a recent attempt to deposit funds.
+\n\nTherefore please wait while your account status is refreshed and all recent payments are validated.
+</string>
+  <string name="fees_advisory_title">
+Understand Before You Play
+</string>
+<string name="fees_advisory">
+<![CDATA[Finney have real value!<br/><br/>
+\n\n<b>IMPORTANT</b>: Every time you make a bet, Uncle Finney\'s Poker deposits the
+funds into a secure 3rd-party escrow (a blockchain contract). After the game, the
+contract pays the \"pot\" to the winner.<br/><br/>notes:<br/>
+<b>-</b> There is a small transaction fee called \"gas,\" generally less than 1 Finney,
+for every transfer. This fee is the same regardless of the size of the bet. So if you\'re
+betting hundreds of Finney, then the fee is a very small percentage of the bet &#8212;
+but if you\'re playing at the \"Starter Table\", with very small bets of just a few Finney,
+then the transaction fee can be almost equal to the \"dust\" bets.<br/><br/>
+<b>-</b> There is an \"escrow\" fee of two percent that is
+decucted by the escrow contract. There is no additional \"house take.\"<br/><br/>
+<b>-</b> After you complete a game, it can take several minutes for your winnings
+(the \"pot\") to be deposited back into your account. Be patient. The escrow contract
+will <b>ALWAYS</b> send the winnings back to the appropriate player.<br/><br/>
+<b>-</b> Once you start a game, there\'s no backing out. If a player exits
+the game <i>for any reason</i>, even if, for example, their phone battery dies, they
+<b>forfeit the game</b>. This rule protects you from players that would shut off their
+phones to try and back out of a bad hand.<br/><br/>
+This message will be displayed every time you come to this page, until you un-check
+the \"Show Fees Advisory\" menu item.]]>
+</string>
+<string name="new_game_help_title">
+Choose a Group to Find an Opponent
+</string>
+<string name="new_game_help">
+The balance displayed on this screen, when up-to-date, reflects your current balance
+on the blockchain. It does not include transactions that have not yet been accepted
+on the blockchain, which can take up to 5 minutes, depending on network conditions. For
+this reason, the balance, even when synced with the blockchain, may not reflect winnings
+from your most recent game for a few minutes.
+\n\nIn Uncle-Finney\'s Poker you bet real Finney, with real players. On the
+next page you\'ll see a list of players who are currently online, and available for
+you to challenge to a game.
+\n\nIf you choose to play with strangers, then we categorize players according to how high
+they want to \"set the stakes\" in their game; For example, if you choose to play at the
+\"High Roller\" table, then the ante is 625 Finney, and the maximum amount of any raise is
+2500 Finney.
+\n\nIf you have a group of friends who are poker enthusiasts, you can create or join your
+own playing group. Then you will only be visible to your friends who enter the group\'s \"magic word.\"
+\n\nIf you select to play with friends, then you and your opponent will negotiate a maximum
+raise. The ante will be one quarter of the negotiated maximum raise.
+\n\nIf you\'re new to the game, or if you only have a very small balance, then select the
+Starter Table to just get a feel for the game. But be aware that at the starter table you\'ll be
+playing for such a small amount that the transaction fees will take up a significant fraction of
+any winnings.
+\n\nIf you are ready for a more adventurous game, then select one of the other options
+to find an opponent for some serious betting!
+</string>
+<string name="new_game_bal_too_low">
+Your balance must be at least BAL_MULTIPLE times the maximum raise (MIN_WAGER Finney).
+\n\nSince your balance is less than this amount, WHAT_TO_DO.
+</string>
+<string name="new_game_new_group_title">
+Enter a Name for Your Group
+</string>
+<string name="new_game_new_group">
+Enter a name or \"magic word\" for a group that you would like to create or join. On
+the next page you will only see other players who have typed in the same word. You will
+only be visible to players from that group.
+</string>
+<string name="new_game_old_group_title">
+Select a Group
+</string>
+<string name="new_game_old_group">
+Select a name or \"magic word\" for a group that you would like to join. On
+the next page you will only see other players who have selected the same word. You will
+only be visible to players from that group.
+</string>
+<string name="hand_rankings_title">
+Poker Hand Rankings
+</string>
+<string name="hand_rankings">
+  <![CDATA[
+	   <u>Summary:</u><br/><br/>
+	   <b>Straight Flush</b><br/>
+	   <b>Four of a Kind</b><br/>
+	   <b>Full House</b><br/>
+	   <b>Flush</b><br/>
+	   <b>Straight</b><br/>
+	   <b>Three of a kind</b><br/>
+	   <b>Two pair</b><br/>
+	   <b>One pair</b><br/>
+	   <b>High card</b><br/><br/>
+<u>More details:</u><br/><br/>
+<b>Straight Flush</b>: Five cards in numerical order, all of identical suits.<br/><br/>
+In the event of a tie: Highest rank at the top of the sequence wins. The best possible
+straight flush is known as a royal flush, which consists of the ace, king, queen, jack and
+ten of a suit. A royal flush is an unbeatable hand.<br/><br/>
+<b>Four of a Kind</b>: Four cards of the same rank, and one side card or ‘kicker’.<br/><br/>
+In the event of a tie: Highest four of a kind wins.<br/><br/>
+<b>Full House</b>: Three cards of the same rank, and two cards of a different, matching rank.<br/><br/>
+In the event of a tie: Highest three matching cards wins the pot.<br/><br/>
+<b>Flush</b>: Five cards of the same suit.<br/><br/>
+In the event of a tie: The player holding the highest ranked card wins. If necessary,
+the second-highest, third-highest, fourth-highest, and fifth-highest cards can be used to break
+the tie. In the rare event that all five cards are the same ranks, then we pay the Challenger.
+The suit itself is never used to break a tie in poker.<br/><br/>
+<b>Straight</b>: Five cards in sequence.<br/><br/>
+In the event of a tie: Highest ranking card at the top of the sequence wins. Note: The Ace
+may be used at the top or bottom of the sequence, and is the only card which can act in this manner.<br/><br/>
+A,K,Q,J,T is the highest (Ace high) straight; 5,4,3,2,A is the lowest (Five high) straight.<br/><br/>
+<b>Three of a kind</b>: Three cards of the same rank, and two unrelated side cards.<br/><br/>
+In the event of a tie: Highest ranking three of a kind wins.<br/><br/>
+<b>Two pair</b>: Two cards of a matching rank, another two cards of a different matching
+rank, and one side card.<br/><br/>
+In the event of a tie: Highest pair wins. If players have the same highest pair, highest
+second pair wins. If both players have two identical pairs, highest side card wins.<br/><br/>
+<b>One pair</b>: Two cards of a matching rank, and three unrelated side cards.<br/><br/>
+In the event of a tie: Highest pair wins. If players have the same pair, the highest side
+card wins, and if necessary, the second-highest and third-highest side card can be used to break
+the tie.<br/><br/>
+<b>High card</b>: Any hand that does not qualify under a category listed above.<br/><br/>
+In the event of a tie: Highest card wins, and if necessary, the second-highest, third-highest,
+fourth-highest and smallest card can be used to break the tie.]]>
+</string>
+<string name="select_opponent_help_wager_range">
+On this page you can select an opponent to challenge to a poker game. You are
+playing PLAYING_MSG, and you can negotiate a \"maximum raise\" from MIN_WAGER to MAX_WAGER.
+The initial ante is fixed at one quarter of the maximum raise.
+\n\nYou will not be able to propose or accept a game in which your balance is less than
+five times the maximum raise.
+</string>
+<string name="select_opponent_help_fixed_wager">
+On this page you can select an opponent to challenge to a poker game. You are
+playing PLAYING_MSG, with a fixed maximum raise of WAGER. The initial ante is one quarter of
+the maximum raise.
+</string>
+<string name="no_opponents_online_title">
+No Opponents are Online
+</string>
+<string name="no_opponents_online">
+You are playing PLAY_GROUP_PHRASE.
+\n\nEither there are no other opponents from this group online at this moment, or all online
+opponents from this group are currently engaged in games.
+\n\nYou can wait here until another player comes online, or until a currently-engaged player
+completes his game, or you can click CANCEL to go back and select a different group.
+</string>
+<string name="wallet_help_title">
+Uncle Finney\'s Poker -- Ether Wallet
+</string>
+<string name="wallet_help">
+It turns out that Finney are actually a denomination of the popular crypto-currency,
+Ether &#8212; One thousand Finney\'s make one Ether. And this wallet is
+actually a complete Ether wallet.
+\n\nWhen you registered your Uncle Finney\'s Poker username, you created an Ether account,
+which you can access here. You can check the balance of your Ether account; or send or receive
+Finney (Ether) to/from other Ether addresses. You can also check the transaction history
+associated with your account.
+</string>
+<!-- this is not used -->
+<string name="import_acct_help">
+If you like you can import an Ether account that you have created with some other Ether
+client &#8212; For example, I recommend https://www.myetherwallet.com/ to create Ether
+wallets. Even of you already have a wallet, in order to import it you\'ll need to get the
+private key, which you can do at myetherwallet.com, (under the view wallet info tab). Once
+you have the private key, to import it into the EtherPay app select the \"import account\"
+menu item.
+\n\nNOTE: Uncle Finney\'s Poker is *not* an \"Ethereum node\"&#8212;it uses your private
+key to sign transactions; and it uses etherscan.io to check your Ether balance and to
+to broadcast signed transactions. Of course, your private key is never transmitted.
+</string>
+<string name="about_ufp">
+Uncle Finney\'s Poker Version VERSION
+\n\nCredits
+\n\nUncle Finney\'s Poker is built on the work of countless individuals who have made
+the Ethereum platform easy to work with. Also thanks to so many who have published open
+source code forming the foundation of much of the functionality of Uncle Finney\'s Poker.
+Special thanks to:
+\n\nEtherchain.org
+\n\nEtherscan.io (Powered by Etherscan.io APIs)
+\n\nethereumJS, by the Ethereum Javascript Community
+\n\nZBar and the ZBar android SDK by Jeff Brown
+\n\nRoberto Tyley for his SpongyCastle java repackage of the BouncyCastle crypto lib by the
+Legion of the Bouncy Castle
+\n\nKen Gullaksen for his QRCode generator, built on ZXing
+\n\nJames Simpson and GoldFire Studios, Inc. for PokerSolver
+\n\nPunjabi Graphics
+\n\n\nIt is our fervent wish that this program leads to increased ownership and use of
+Ether. Also we encourage others to create applications (hopefully in the same spirit of
+promoting the mass-adoption of Ether), building upon and learning from our code base, much
+as we have built this program building upon the work of others.
+\nTherefore&#8230;
+\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software
+and associated documentation files (the "Software"), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge, publish, distribute,
+sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+\n\nThe above copyright notice and this permission notice shall be included in all copies or
+substantial portions of the Software.
+\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+</string>
+<string name="export_acct_prompt">
+This QR Code represents the private key to your account. You can scan the QR Code into an
+Ether wallet, or into another smart-phone that is running Uncle Finney\'s Poker. You would
+do this to move your account to a different wallet. Also you can send the key to yourself
+to back it up, for example, to protect your account in case you break your phone.
+\n\nImportant: Do not share your private key. If you give someone your private key
+then they have access to ALL the funds in your account!
+\n\nNote: It is not recommended to play Uncle Finney\'s Poker from two different
+devices, using the same Ether account.
+</string>
+<string name="receive_qr_prompt">
+This QR code represents your public account address. You need to provide this address to
+any  person, in order for them to send you Ether. You can allow people to scan the address
+directly from your phone, or you can share it, using the share button below.
+\n\nNote: It generally takes about 15 seconds for an Ether transaction to affect your
+balance.
+</string>
+<string name="send_help_title">
+Sending Ether Payments
+</string>
+<string name="send_help">
+On this screen you can make a Finney (or Ether) payment; that is, send Finney (Ether) to the
+selected address.
+\n\nBefore you click the \"Pay\" button, enter the amount that you would like to send. You
+Can choose to denominate the amount in either Finney or ETH.
+\n\nIn the options menu you can check \"Show Data\." This will give you the ability to attach a
+short note to the payment. This note will be permanently attached to the payment, and publicly
+visible. For example, if you are paying a bill at a restaurant, you might enter your table number
+here.
+\n\nIn the options menu you can also check \"Show GAS\." Each Ether transaction includes a small
+fee called \"GAS\", which pays for the computational cost of executing the transaction on the
+Ethereum Virtual Machine. Gas is not denominated in Ether; to find the actual cost of a transaction
+in Ether, the gas is multiplied by a gas-price, which is set by the Ethereum nodes. (The gas price
+is very small, at the time of this writing appoximently 0.00000002 ETH/GAS).. Note that the
+transaction only specifies the maximum gas that can be consumed; any gas that is not used is not
+deducted from your account.
+\n\nThe simple Payment screen gives you the ability to send Ether to simple Ether addresses &#8212;
+and it sets the gas limit to a reasonable, conservative value. But in some cases you might want to
+send Ether to Ether Contracts, which might require much more processing. For those cases you should
+enable \"Show Gas\" in the options menu. Then you can specify the maximum gas for your transaction.
+</string>
+<string name="size_help_title">
+Specifiy an Amount
+</string>
+<string name="size_help">
+Use this field to specify the amount of Finney (Ether) that you would like to send. You can
+denominate the amount in either Finney or ETH: One ETH is one thousand Finney.
+\n\nNote: In addition to the amount you send, a small transaction fee, approximately equal to
+1 Finney, will be dedcuted from your account.
+</string>
+<string name="gas_help_title">
+About GAS
+</string>
+<string name="gas_help">
+Use this field to specify the maximum gas that can be consumed by this transaction. For example,
+for a transfer to a simple Ether account I recommend a gas-limit of 35,000 GAS. Typically the
+transaction will consume less &#8212; about 21,000 GAS&#8230; A transaction to a Contract address might
+consume much more. For example, vDice.io recommends a gas limit of 180,000 GAS in order to send
+a payment to one of their betting contracts.
+</string>
+<string name="data_help_title">
+Adding Data to an Ether Payment
+</string>
+<string name="data_help">
+Use this field to attach identifying information to this payment. For example, if you are
+paying a bill at a restaurant, you might enter your table number here.
+</string>
+  <string name="transaction_sent">
+Transaction Sent
+</string>
+  <string name="exceed_max_send_size">
+Cannot send more than MAXETH ETH
+</string>
+<string name="retrieving_transactions">retrieving transactions</string>
+<string name="Payments_Sent">Payments Sent</string>
+<string name="Payments_Received">Payments Received</string>
+<string name="error_retrieving_transactions">error retrieving transactions!</string>
+<string name="retrieving_X_transactions">retrieving X transactions...</string>
+<string name="play_for_practice">Starter Table\n(Max. Raise WAGER)</string>
+<string name="play_for_real">Intermediate Table\n(Max. Raise WAGER)</string>
+<string name="play_with_pros">High Roller Table\n(Max. Raise WAGER)</string>
+
+<string name="find_an_opponent">Find an Opponent</string>
+<string name="looking_for_players">looking for players&#8230;</string>
+
+<!--
+these are the messages that preceed the beginning of a game
+-->
+<string name="You_Are_Challenged">You Are Challenged!</string>
+<string name="decline_challenge">Decline the Challenge</string>
+<string name="accept_but_new_wager">Accept but propose new wager</string>
+<string name="Has_Countered">Has Countered</string>
+<string name="Has_Chickened_Out">Has Chickened Out!</string>
+<string name="Declined_Your_Challenge">Declined Your Challlenge</string>
+<string name="ask_wager_title">How Much Are You Prepared to Wager?</string>
+<string name="You_are_playing">You are playing</string>
+<string name="The_minimum_wager_is">The minimum wager is</string>
+<string name="the_maximum_wager_is">the maximum wager is</string>
+<string name="but_cuz_your_bal_is_only">However, because your balance is only</string>
+<string name="now_max_wager_is">right now the maximum wager that you can play with is</string>
+<string name="enter_raise_prompt">Enter Max Raise</string>
+<string name="Waiting_for_Response_from">Waiting for Response from</string>
+
+
+
+<string name="you_are_challenged_fixed_wager">
+CHALLENGER challenges you to a game!
+\n\nThe maximum raise is WAGER Finney.
+\n\nYou can
+\n1) decline the challenge
+\n3) accept the challenge
+</string>
+<string name="you_are_challenged">
+CHALLENGER challenges you to a game!
+\n\nThe proposed maximum raise is WAGER Finney.
+\n\nYou can
+\n1) decline the challenge;
+\n2) accept the challenge, but propose a different maximum raise; or
+\n3) accept the challenge and the maximum raise.
+</string>
+<string name="counter_wager">
+CHALLENGER has countered.
+\n\nThe proposed maximum raise is WAGER Finney.
+\n\nYou can
+\n1) decline the challenge;
+\n2) accept the challenge, but propose a different maximum raise; or
+\n3) accept the challenge and the maximum raise.
+</string>
+  <string name="no_opponents">
+No opponents online: you are the first!
+</string>
+  <string name="wait_or_cancel">
+You are waiting for CHALLENGER to answer your current challenge.
+\n\nPress OK to continue waiting, or
+\n\nPress Cancel to withdraw the challenge.
+</string>
+<string name="opponent_backed_out">
+CHALLENGER has backed out of the contest (chiiiken!)&#8230; if you have already
+placed a wager, then the funds will automatically be returned to your account within
+a minute or two.
+</string>
+<string name="waiting_for_challenger">
+Waiting for CHALLENGER to click OK&#8230;
+</string>
+<string name="payout_advisory_title">
+Where\'s My Money?
+</string>
+<string name="payout_advisory_msg">
+  <![CDATA[
+Starting<br/>
+balance:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;START_BAL Finney<br/>
+Your<br/>
+bet(s):&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(TX_TOTAL) Finney<br/>
+Fees for TX_CNT<br/>
+bet(s):&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(TX_FEES) Finney<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_______________<br/>
+Interim<br/>
+balance:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DEDUCTED_BAL Finney<br/>
+Winnings:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;POT Finney<br/>
+Escrow fee:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(ESCROW_FEE) Finney<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_______________<br/>
+Final (estimated)<br/>
+balance:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FINAL_BAL Finney<br/>
+<br/>
+<br/>
+When your account is up-to-date with respect to all of the deductions listed above you can
+expect to see a balance of approximately DEDUCTED_BAL Finney (plus or minus one, due to rounding).
+<br/>
+<br/>
+Your winnings will be credited within about two minutes <b>After</b> your account is up-to-date
+vis-a-vis deductions. At that time you will be awarded POT Finney minus a 2% escrow fee. So in
+about two minutes expect to see an account balance of approximately FINAL_BAL Finney  (plus or minus one,
+due to rounding).<br/>
+<br/>
+Note:
+<br/>
+After each game it may take a minute or so for your account balance to reflect any bets that
+you placed during the game. That is the reason that you will see a flashing message about refreshing
+your account. <i>After</i> your account is up-to-date, vis-a-vis any bets tha you placed, it may take an
+<i>additional</i> minute or two for the blockchain contract to award the pot to the winner.
+<br/>
+<br/>
+<b>Be patient!</b>
+<br/>
+<br/>
+This message will be displayed every time you win, until you un-check the \"Show Payout Advisory\" menu
+item.]]>
+</string>
+<!--
+  these are the messages displayed during a game
+ -->
+<string name="Depositing_ante">Depositing ante</string>
+<string name="has_deposited_his_ante">has deposited his ante</string>
+<string name="Place_Your_Bet">Place Your Bet!</string>
+<!-- as in, Mr. X has raised you 5 Finney... -->
+<string name="has_raised_you">has raised you</string>
+<!-- as in, Mr. X bet 5 Finney... -->
+<string name="bet">bet</string>
+<string name="Your_turn">Your turn</string>
+<!-- as in, Mr. X calls -->
+<string name="calls">calls</string>
+<string name="Place_Bet">Place Bet</string>
+<string name="Placing_bet">Placing bet</string>
+<string name="Betting_is_complete">Betting is complete</string>
+<string name="Select_cards_to_replace">Select cards to replace</string>
+<string name="waiting_for_opponent_ante">Waiting for OPPONENT\'s ante&#8230;</string>
+<string name="waiting_for_opponent_bet">Waiting for OPPONENT to bet&#8230;</string>
+<string name="waiting_for_opponent_discard">Waiting for OPPONENT to discard&#8230;</string>
+<string name="processing_your_deposit">Processing your deposit&#8230;</string>
+<string name="opponent_difficulty">OPPONENT is experiencing technical or connectivity issues; we will give him an extra SECONDS seconds</string>
+<string name="processing_opponent_deposit">Processing OPPONENT\'s deposit&#8230; SECONDS seconds</string>
+<string name="game_start">Game is about to start</string>
+<string name="card_strings_err">error retrieving card strings!</string>
+<string name="Folding">Folding</string>
+<string name="you_win_title">You Win!</string>
+<string name="opponent_wins_title">OPPONENT Wins</string>
+<string name="abandoned_game_title">Abandoned Game</string>
+<string name="You_have">You have</string>
+<string name="opponent_has">OPPONENT has</string>
+<string name="forfeited_the_game">forfeited the game!</string>
+<string name="abandoned_msg">This game has been abandoned!</string>
+<string name="forfeited_msg_prompt">Forfeit message</string>
+<string name="You_win_the_pot">You win the pot!</string>
+<string name="opponent_wins_the_pot">OPPONENT wins the pot. Better luck next time.</string>
+<string name="exit_game_title">Exit This Game?</string>
+<string name="exit_game_msg">
+If you exit this game, then you forfeit, and OPPONENT will win the pot!
+\n\nPress Cancel to continue the game, or Exit to exit
+</string>
+  <string name="bet_limited">
+Your bet is limited to ensure that you have sufficient funds to call any opponent bet
+</string>
+  <string name="fairness_bug">
+hey! encountered an anomaly in the fairness verification&#8230; SOMETHING DOES NOT SEEM RIGHT!!!
+</string>
+  <string name="internet_bet_err_msg">
+Your Internet connection failed, and we were unable to deposit your bet.
+\n\nUnfortunately, this forces you to forfeit the game. So OPPONENT_USERNAME wins.
+</string>
+  <string name="funds_will_be_credited">
+Note: the pot will be automatically credited to your account, usually in less than two minutes.
+</string>
+<!--
+    status and error messages
+ -->
+  <string name="no_internet_title">
+Uh Oh: Internet Connectivity Problem
+</string>
+  <string name="no_internet">
+\n\nUncle Finney\'s Poker requires a reliable Internet connection. Unfortunately we are
+currently unable to access the Internet now.
+\n\nThe specific error is:
+\n\nERROR
+\n\nPlease check your Internet connection
+</string>
+  <string name="partner_sites_title">
+Error Accessing Blockchain
+</string>
+  <string name="partner_sites">
+Uncle Finney\'s Poker needs to retrieve real-time information from several website
+services, including Etherscan.io.
+\n\nUnfortunately, at the moment, one of the required services seems to be non-functional.
+Please try again after these services return to their normal, excellent function.
+\n\nThe specific error is:
+\n\nERROR\n
+</string>
+  <string name="partner_sites_w_retry">
+Uncle Finney\'s Poker needs to retrieve real-time information from several website
+services, including Etherscan.io.
+\n\nUnfortunately, one of the required services is experiencing some \"hiccups\", or perhaps your
+Internet connection has introduced significant latency. The specific error is:
+\n\nERROR\n
+\nIf this was a one-time occurrence, you can choose to try again; or you can exit the program and try
+again after your Internet connection becomes more reliable and/or these services return to their
+normal, excellent function.
+</string>
+  <string name="error_check_connection">
+Network error. Please check your internet connection.
+</string>
+  <string name="dns_exception">
+DNS Lookup Timeout or Exception
+</string>
+  <string name="socket_exception">
+Socket Timeout Exception
+</string>
+  <string name="game_server_comm_fail">
+communication with game server failed
+</string>
+  <string name="failed_to_register">
+failed to register with game server
+</string>
+    <string name="wait_frefresh_bal">
+please wait... still refreshing account balance...
+</string>
+  <string name="acct_up_to_date">
+account status is up-to-date
+</string>
+  <string name="bad_private_key">
+invalid private key; length is
+</string>
+  <string name="bad_acct_from_key">
+invalid account address from key; length is
+</string>
+  <string name="new_acct_success">
+new acct sucessfully imported:
+</string>
+  <string name="cant_read_balance">
+unable to retrieve your balance
+</string>
+    <string name="del_acct_question">
+Delete current account?
+</string>
+  <string name="partner_sites_down">
+Partner sites are down!
+</string>
+  <string name="network_err">
+Network error. Please check your internet connection
+</string>
+  <string name="uhoh_connectivity_title">
+  Uh Oh: Internet Connectivity Problem
+</string>
+  <string name="uhoh_connectivity_balance_msg">
+Your Internet connection failed, and we were unable to retrieve your actual balance.
+\n\nPlease check your Internet connection
+  </string>
+  <string name="block_nos_err">
+unable to read block numbers from unclefinneys.com or etherscan.io
+</string>
+  <string name="cant_reg_wo_device_id">
+We cannot register you as a player without your unique device id
+</string>
+  <string name="contacting_server">
+Contacting game server...
+</string>
+  <string name="login_err">
+login error
+</string>
+  <string name="err_getting_opponent_list">
+error retrieving opponent list!
+</string>
+  <string name="Error">
+Error
+</string>
+  <string name="tx_err_ok">
+An error occurred while attempting this transaction -- press OK to continue
+</string>
+  <string name="tx_success_ok">
+your transaction was sent successfully -- press OK to continue
+</string>
+  <string name="cant_send_zero">
+Cannot send zero Finney/ETH
+</string>
+  <string name="parse_gas_limit">
+Unable to parse Gas limit
+</string>
+  <string name="gas_too_low">
+Gas limit is too low -- transaction might not succeed!
+</string>
+  <string name="not_sufficient_to_cover">
+is not sufficient to cover
+</string>
+  <string name="recipient_invalid_length_is">
+Recipient address is not valid; length is
+</string>
+  <string name="recipient_invalid_own">
+Recipient cannot be the same as your account address
+</string>
+  <string name="for_price">for</string>
+  <string name="plus">plus</string>
+  <string name="Balance">Balance</string>
+  <string name="processing">processing</string>
+  <string name="Accept">Accept</string>
+  <string name="Continue">Continue</string>
+  <string name="Cancel">Cancel</string>
+  <string name="About">About</string>
+  <string name="Done">Done</string>
+  <string name="Call">Call</string>
+  <string name="Check">Check</string>
+  <string name="No_bet">No bet</string>
+  <string name="TRY_AGAIN">TRY AGAIN</string>
+  <string name="EXIT">EXIT</string>
+  <string name="Exit">Exit</string>
+  <string name="OK">OK</string>
+
+</resources>

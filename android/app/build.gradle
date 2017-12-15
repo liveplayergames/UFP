@@ -1,0 +1,87 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId "com.liveplayergames.finneypoker"
+        minSdkVersion 16
+        targetSdkVersion 25
+        versionCode 207
+        versionName "MA-2.07"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+    }
+    buildTypes {
+        debug {
+            debuggable true
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDir 'jniLibs'
+        }
+    }
+    packagingOptions {
+        pickFirst 'META-INF/spring.tooling'
+        pickFirst 'META-INF/spring.handlers'
+        pickFirst 'META-INF/spring.schemas'
+        pickFirst 'META-INF/ASL2.0'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
+    configurations {
+        all*.exclude group: 'org.iq80.leveldb'
+    }
+    dexOptions {
+        jumboMode true
+        javaMaxHeapSize "4g"
+    }
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    androidTestCompile 'com.google.code.findbugs:jsr305:3.0.0'
+    compile 'com.android.support:appcompat-v7:25.0.1'
+    compile 'com.android.support:design:25.0.1'
+    testCompile 'junit:junit:4.12'
+    compile project(':zBarBuild')
+    compile project(':PayPalAndroidSDK-2.15.2')
+
+    // https://mvnrepository.com/artifact/com.madgag.spongycastle/core
+    compile 'com.madgag.spongycastle:core:1.54.0.0'
+    // https://mvnrepository.com/artifact/com.madgag.spongycastle/prov
+    compile 'com.madgag.spongycastle:prov:1.54.0.0'
+    // https://mvnrepository.com/artifact/commons-codec/commons-codec
+    compile 'commons-codec:commons-codec:1.9'
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+    compile 'org.apache.commons:commons-lang3:3.0'
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-android
+    //compile 'org.slf4j:slf4j-android:1.7.21'
+    //https://github.com/kenglxn/QRGen
+    compile 'com.github.kenglxn.QRGen:android:2.2.0'
+
+    //https://github.com/ethereum/ethereumj
+    compile project(':ethereumj-core')
+
+    compile('io.socket:socket.io-client:0.8.1') {
+        exclude group: 'org.json', module: 'json'
+    }
+
+    compile 'com.android.support:multidex:1.0.1'
+}

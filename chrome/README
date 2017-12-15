@@ -1,0 +1,11 @@
+
+
+before you can build you need to execute:
+
+npm install
+
+this will create the node_modules directory
+
+then
+mkdir bundle
+make

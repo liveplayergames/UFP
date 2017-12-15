@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- note: android:gravity="center_horizontal" in the layout tag will center the layout's children
+     horizontally inside the LinearLayout.
+
+     question: do we want the padding??
+     -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_send"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@drawable/background_graphic"
+    tools:context="com.liveplayergames.finneypoker.SendActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/color_toolbar"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:layout_alignParentTop="true"/>
+
+
+    <TextView
+        android:id="@+id/to_addr_prompt"
+        android:text="Send To"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:gravity="center_vertical"		
+        android:layout_marginTop="22dp"
+        android:minHeight="@dimen/header_min_height"	
+        android:textSize="@dimen/header_text_size"	
+        android:textStyle="bold"
+        android:background="@color/color_headerbar"
+        />
+
+    <!-- most of the other items on this page have a help imagebutton. that causes them to appear
+        vertically centered in their respective layouts. so for the to-addr we need to veritically
+        center to make it match the other itmes
+        -->
+    <TextView
+        android:id="@+id/to_addr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center_vertical"
+	android:textSize="@dimen/balance_text_size_medium"	
+        android:singleLine="true"
+        android:text="-- recipeient addr --"
+        />
+
+    <TextView
+        android:text="Amount"
+        android:id="@+id/size_prompt"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:gravity="center_vertical"		
+        android:layout_marginTop="22dp"
+        android:minHeight="@dimen/header_min_height"	
+        android:textSize="@dimen/header_text_size"	
+        android:textStyle="bold"
+        android:background="@color/color_headerbar"
+        />
+
+    <!-- linear layout for amount and denomination -->
+    <!-- note: android:gravity in the layout tag will affect the layout's children
+         -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="bottom"
+        android:layout_marginTop="22dp"
+         >
+
+        <EditText
+            android:id="@+id/size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+    	    android:textSize="@dimen/balance_text_size_big"
+            android:singleLine="true"
+            android:text="0.000000"
+            android:maxLength="9"
+            android:minEms="5"
+            android:inputType="numberDecimal"
+            android:layout_weight="0"
+        />
+
+        <Spinner
+            android:id="@+id/denomination"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_help0"
+            android:background="?attr/selectableItemBackground"
+            android:id="@+id/size_help"
+            android:onClick="do_size_help"
+            android:layout_weight="0"
+            android:layout_gravity="top"
+            />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/data_prompt"
+        android:text="Data"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_vertical"		
+        android:layout_marginTop="22dp"
+        android:textAlignment="center"
+        android:minHeight="@dimen/header_min_height"	
+        android:textSize="@dimen/header_text_size"	
+        android:textStyle="bold"
+        android:background="@color/color_headerbar"
+        />
+
+
+    <!-- linear layout for data and data-help -->
+    <!-- note: android:gravity in the layout tag will affect the layout's children
+         -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/data_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="bottom"
+        android:layout_marginTop="22dp"
+         >
+
+        <EditText
+            android:id="@+id/data"
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+	    android:textSize="@dimen/balance_text_size_big"
+            android:layout_marginLeft="11dp"
+            android:singleLine="true"
+            android:inputType="text"
+            android:maxLength="20"
+            android:minEms="15"
+            android:maxEms="15"
+            android:layout_weight="0"
+            />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_help0"
+            android:background="?attr/selectableItemBackground"
+            android:id="@+id/data_help"
+            android:onClick="do_data_help"
+            android:layout_weight="0"
+            android:layout_gravity="top"
+            />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/gas_prompt"
+        android:text="Gas Limit"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:gravity="center_vertical"		
+        android:layout_marginTop="22dp"
+        android:minHeight="@dimen/header_min_height"	
+        android:textSize="@dimen/header_text_size"	
+        android:textStyle="bold"
+        android:background="@color/color_headerbar"
+        />
+
+    <!-- linear layout for data and data-help -->
+    <!-- note: android:gravity in the layout tag will affect the layout's children
+         -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/gas_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="bottom"
+        android:layout_marginTop="22dp"
+        >
+
+        <EditText
+            android:id="@+id/gas"
+            android:inputType="number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:layout_gravity="left"
+	    android:textSize="@dimen/balance_text_size_big"
+            android:singleLine="true"
+            android:text="0000000"
+            android:maxLength="9"
+            android:minEms="5"
+            />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/gas_help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_help0"
+            android:background="?attr/selectableItemBackground"
+            android:onClick="do_gas_help"
+            android:layout_gravity="top"
+            />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/pay_button"
+        android:text="Pay"
+        android:onClick="do_pay"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:minHeight="@dimen/button_min_height"
+        android:textAlignment="center"
+        android:background="@drawable/button_background"
+        />
+
+</LinearLayout>

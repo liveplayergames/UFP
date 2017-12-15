@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<!--
+    call gtmetrix wen page with url of current tab
+ -->
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="bootstrap/css/bootstrap-slider.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css" >
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+<!--
+    <script src="jquery/jquery-3.2.1.js"></script>
+    <script src="bootstrap/js/popper.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+-->
+
+    <title>Uncle Finney's Poker -- Online Edition</title>
+    <style>
+      .ufphidden>div {
+        display:none;
+      }
+      .ufpvisible>div {
+        display:block;
+      }
+
+
+/* NEW */
+html {
+    height: 100%
+}
+    body {
+      font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+      font-size: 100%;
+
+      min-width: 480px;
+      min-height: 100%; /* 640px; */
+
+ /*     background-image: url(images/pokertable2.jpg), url(images/darkgray1.jpg);
+      background-repeat: repeat-x, repeat-y;
+      background-position:0px 0px;
+      background-size:100% 125%, 100% 100%; */
+	background-size:100%;
+	background: linear-gradient(to bottom, lightgray, #535353) no-repeat;
+    }
+
+   .jumbotron-cntnr {
+	width:65%; /* this makes it horz size better */
+    }
+
+    div.jumbotron {
+      background: url(images/Banner1Moya.jpg) no-repeat center center; 
+      background-size:100%;
+      color: white;
+      margin-top:10px;
+      border-radius: 25px;
+    }
+    .btn-danger {
+      color: yellow;
+    }
+    .modal-header {
+      padding:9px 15px;
+      border-bottom:1px solid #eee;
+      background-color: #4b7541;
+      color:white;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+    p.subheading {
+      color: black; /* white; */
+      text-shadow: gray 0.3em 0.3em 0.3em; /* black */
+      font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+    }
+    p.subheading1 {
+      position:absolute;
+      color: yellow;
+      text-shadow: black 0.3em 0.3em 0.3em;
+      font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+      font-size: 140%;
+      text-align:center;
+      top:90%;
+	width:100%;
+
+    }
+    .modal-bodyA {
+      height:600px;
+      max-height: calc(100vh - 210px);
+      overflow-y: auto;
+      margin-left:10px;
+    }
+    .btn:hover {
+      background-position: 30px 30px;
+	background:#fffeea;    /*      opacity:0.9; # this give us a nice hover highlight */
+    }
+    .btn-dark:hover {
+      background:#807f75;
+    }
+    .btn-danger:hover {
+      background-position: 30px 30px;
+	background:#cc0044;
+    }
+
+	.btn-default {
+	background: linear-gradient(to bottom, #798f58, #9fb384) no-repeat;
+ border-radius: 20px;
+	}
+    .flash1 {
+      animation-name: flash1;
+      animation-duration: 4.0s;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      animation-play-state: running;
+    }
+    @keyframes flash1 {
+      from {color: yellow;}
+      to {color: brown;}
+    }
+    .left-banner {
+    cursor: pointer;
+      background-image: url(images/left-banner.jpg); background-size:contain; background-repeat:no-repeat; /*background-position: right 10px; */
+      float:left;
+      width:17%;
+      height:120px;
+      margin-top:10px;
+      margin-left:5px;
+
+    }
+    .right-banner {
+    cursor: pointer;
+      background-image: url(images/right-banner.jpg); background-size:contain; background-repeat:no-repeat; /*background-position: right 10px; */
+      top:0px;
+      width:17%;
+      height:120px;
+      float: right;
+      margin-top:10px;
+    }
+    .lower-footer {
+      width:100%;
+      text-align:center;
+      position:absolute;
+      top:97%;
+      color:white;
+      font-size: 100%;
+    }
+
+
+
+.TwoColUL {
+	color:white;
+    padding: 0;
+    margin: 0;
+
+    -webkit-column-count: 2;
+       -moz-column-count: 2;
+            column-count: 2;
+    -webkit-column-width: 50%;
+       -moz-column-width: 50%;
+            column-width: 50%;
+
+	border: 0px;
+
+
+}
+
+.TwoColLI {
+	height:70px;top-margin:0px;
+	line-height:70px;
+}
+
+li:hover {
+    background-color: #808080;
+}
+.OpponentListDiv {
+    width: 80%px;
+    height: 200px;
+    border: 4px solid #a0a0a0;
+    overflow-y: scroll;
+	border-radius: 25px; /* NEW */
+}
+
+
+.brdback {
+	min-width:100%;
+	min-height:600px;
+	background-color: darkgreen;
+      background-position:0px 0px;
+	 background-size:100%;
+}
+    </style>
+    <script type="text/javascript" src="bundle/popup.js"></script>
+    <script type="text/javascript" src="bundle/welcome_page.js"></script>
+    <script type="text/javascript" src="bundle/select_page.js"></script>
+    <script type="text/javascript" src="bundle/play_page.js"></script>
+
+    <script type="text/javascript" src="js/jquery.qrcode.js"></script>
+    <script type="text/javascript" src="js/qrcode.js"></script>
+
+
+    <script>
+
+$(document).ready(function() {
+  console.log('HEY! setting onBeforeUnload');
+  window.onbeforeunload = function(event) {
+    var nclass = $("#play_page").attr("class");
+    if (nclass.indexOf('ufpvisible') >= 0) {
+      event.returnValue = "You may lose the current game."; // this string is ignored for me
+    } else {
+      console.log('HEY! ok to exit');
+    }
+  };
+
+
+$("#selectBtAccept").on("click", function() { select_page.accept_continue();  });
+$("#seclectBtDecline").click(    function() { select_page.decline_continue(); });
+$("#selectBtOK").click(          function() { select_page.ok_continue();      });
+$("#selectBtCancel").click(      function() { select_page.cancel_continue();  });
+$("#welcomeBtOK").click(         function() { welcome_page.ok_continue();     });
+$("#playBtOK").click(            function() { play_page.ok_continue();        });
+});
+
+
+    </script>
+  </head>
+
+  <body  >
+
+    <!--
+	 * ==================================================================================================
+	 * common
+	 * ==================================================================================================
+      -->
+    <!-- Modal Big Message  -->
+    <div id="dlgBigMessage" class="modal" > <!--  fade -->
+      <!-- class modal and fade (class="modal-title") -->
+      <div class="modal-dialog modal-lg"  >
+        <div class="modal-content">
+	  <div class="panel-heading text-center" >
+	    <row>
+              <h4 id="bigDlgTitle">Welcome Title</h4>
+	    </row>
+	  </div>
+
+	  <div class="modal-bodyA" > <!-- modal body -->
+            <p id="bigDlgText" style="margin:20px";>Welcome Message</p>
+	  </div>
+	  <div class="modal-footer"> <!-- modal footer -->
+<!--	    <button id="dbmOk" type="button" class="btn btn-default" >OK</button> -->
+	    <button id="dbmOk" type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+
+	  </div>
+	</div> <!-- / .modal-content -->
+      </div> <!-- / .modal-dialog -->
+    </div><!-- / .modal -->
+
+
+
+
+    <div class="left-banner"  onclick="window.location.href='https://unclefinneys.com';" >
+<!--      <center><h3 class="flash1" style="margin-left:5px;top:0px;float:top;" >DROID USER?</h3></center>
+      <h4 style="margin-left:5px;"> <p>Play on your Android Smartphone!</p></h4>
+      <p>
+	&nbsp;
+      </p>
+      <h5><a href="https://unclefinneys.com" target="_blank">Download the ANDROID APP HERE!</a></h5> -->
+
+   </div>
+
+    <div class="right-banner" onclick="window.location.href='https://myetherwallet.com';" >
+<!--      <center><h3 class="flash1" style="margin-left:5px;" >Need an Ethereum Wallet?</h3></center>
+      <center><h5><a href="https://myetherwallet.com"  target="_blank">Go to https://MyEtherWallet.com (always check the URL!)</a></h5> </center>
+ -->
+    </div>
+
+
+    <div class="container jumbotron-cntnr" >
+      <div class="jumbotron" >
+	<!-- <h1>Uncle Finneys Poker</h1> -->
+      </div>
+    </div>
+
+    <!-- Modal show message (welcome page) -->
+    <div id="welcomeShowMessage" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+	<!-- Modal content-->
+	<div class="modal-content">
+	  <div class="modal-header">
+	    <div class="pull-left">
+	      <h3 class="modal-title"><span id="wsmsgTitle"></span></h3>
+	    </div>
+	    <button type="button" style="width:30px" class="close" data-dismiss="modal">&times;</button>
+	  </div>
+	  <div class="modal-body">
+	    <p><span id="wsmsgMessage"></span></p>
+	  </div>
+	  <div class="modal-footer">
+	    <button type="button" id="welcomeBtOK" class="btn btn-default" data-dismiss="modal" >OK</button> <!--data-dismiss="modal" -->
+	  </div>
+	</div>
+      </div>
+    </div>
+
+    <!-- Modal show message (select page) -->
+    <div id="selectShowMessage" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+	<!-- Modal content-->
+	<div class="modal-content">
+	  <div class="modal-header">
+	    <div class="pull-left">
+	      <h3 class="modal-title"><span id="ssmsgTitle"></span></h3>
+	    </div>
+	    <button type="button" style="width:30px" class="close" data-dismiss="modal">&times;</button>
+	  </div>
+	  <div class="modal-body">
+	    <p><span id="ssmsgMessage"></span></p>
+	  </div>
+	  <div class="modal-footer">
+	    <button type="button" id="selectBtOK" class="btn btn-default" data-dismiss="modal" >OK</button> <!--data-dismiss="modal" -->
+	  </div>
+	</div>
+      </div>
+    </div>
+
+    <!-- Modal show message (play page) -->
+    <div id="playShowMessage" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+	<!-- Modal content-->
+	<div class="modal-content">
+	  <div class="modal-header">
+	    <div class="pull-left">
+	      <h3 class="modal-title"><span id="psmsgTitle"></span></h3>
+	    </div>
+	    <button type="button" style="width:30px" class="close" data-dismiss="modal">&times;</button>
+	  </div>
+	  <div class="modal-body">
+	    <p><span id="psmsgMessage"></span></p>
+	  </div>
+	  <div class="modal-footer">
+	    <button type="button" id="playBtOK" class="btn btn-default" data-dismiss="modal" >OK</button> <!--data-dismiss="modal" -->
+	  </div>
+	</div>
+      </div>
+    </div>
+
+    <!-- Modal get username -->
+    <div id="dlgGetUserName" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+	<!-- Modal content-->
+	<div class="modal-content">
+	  <div class="modal-header">
+	    <div class="pull-left">
+              <h3 class="modal-title">Please Enter a username</h3>
+	    </div>
+            <button type="button" style="width:30px" class="close" data-dismiss="modal">&times;</button>
+	  </div>
+	  <div class="modal-body">
+            <p id="getNameText" style="margin:20px";>Get name message</p>
+            <p>
+	      <input type="text" class="form-control" placeholder="Please enter a userName" id="edDlgUserName" >
+	    </p>
+	  </div>
+	  <div class="modal-footer">
+            <button type="button" id="btUNSave" class="btn btn-default" data-dismiss="modal" >Save</button> <!--data-dismiss="modal" -->
+            <button type="button" id="btUNCancel" class="btn" data-dismiss="modal">Cancel</button>
+	  </div>
+	</div>
+      </div>
+    </div>
+
+    <!-- Modal get new account -->
+    <div id="dlgGetAccount" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+	<!-- Modal content-->
+	<div class="modal-content">
+	  <div class="modal-header">
+	    <div class="pull-left">
+              <h3 class="modal-title">Please Enter your Private Key</h3>
+	    </div>
+            <button type="button" style="width:30px" class="close" data-dismiss="modal">&times;</button>
+	  </div>
+	  <div class="modal-body">
+            <p id="getAcctText" style="margin:20px";>Get account message</p>
+            <p>
+	      <input type="text" class="form-control" placeholder="Enter the private key for your acct" id="edDlgPrivateKey" >
+	    </p>
+	  </div>
+	  <div class="modal-footer">
+            <button type="button" id="btPKSave" class="btn btn-default" data-dismiss="modal" >Save</button> <!--data-dismiss="modal" -->
+            <button type="button" id="btPKCancel" class="btn" data-dismiss="modal">Cancel</button>
+	  </div>
+	</div>
+      </div>
+    </div>
+
+    <!-- Modal show challenge -->
+    <div id="showChallenge" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+	<!-- Modal content-->
+	<div class="modal-content">
+	  <div class="modal-header">
+	    <div class="pull-left">
+	      <h3 class="modal-title">You are Challenged!</h3>
+	    </div>
+	    <button type="button" style="width:30px" class="close" data-dismiss="modal">&times;</button>
+	  </div>
+	  <div class="modal-body">
+	    <p><span id="scName"></span> has challenged you to a game. The maximum wager is <span id="scWager"/></p>
+	  </div>
+	  <div class="modal-footer">
+	    <button type="button" id="selectBtAccept" class="btn btn-default" data-dismiss="modal" >Accept</button> <!--data-dismiss="modal" -->
+	    <button type="button" id="seclectBtDecline" class="btn" data-dismiss="modal">Decline</button>
+	  </div>
+	</div>
+      </div>
+    </div>
+
+    <!-- Modal waitForAccept -->
+    <div id="waitForAccept" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+	<!-- Modal content-->
+	<div class="modal-content">
+	  <div class="modal-header">
+	    <div class="pull-left">
+	      <h3 class="modal-title">Waiting...</h3>
+	    </div>
+	    <button type="button" style="width:30px" class="close" data-dismiss="modal">&times;</button>
+	  </div>
+	  <div class="modal-body">
+	    <p>waiting for <span id="wfaName"></span> to accept your challenge.</p>
+	  </div>
+	  <div class="modal-footer">
+	    <button type="button" id="selectBtCancel" class="btn btn-default" data-dismiss="modal" >Cancel</button> <!--data-dismiss="modal" -->
+	  </div>
+	</div>
+      </div>
+    </div>
+
+
+
+    <!-- Modal ShowQRCode -->
+    <div id="dlgShowQR" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+	<!-- Modal content-->
+	<div class="modal-content">
+
+	  <div class="modal-header">
+	    <div class="pull-left">
+	      <h5 class="modal-title">...</h5> 
+	    </div>
+	  </div>
+
+	  <div class="modal-body">
+		<div id="qrcodeCanvas" style="display:table;margin:0 auto;">
+		</div>
+		<p/>
+	    <p style="text-align:center;" >Make sure your reader shows this address:</p><p style="text-align:center;"><span id="dsqrAddr" ></span> </p>
+	  </div>
+	  <div class="modal-footer">
+	    <button type="button" id="selectBtCancel" class="btn btn-default" data-dismiss="modal" >Close</button> <!--data-dismiss="modal" -->
+	  </div>
+	</div>
+      </div>
+    </div>
+
+
+
+
+
+    <!--
+	 * ==================================================================================================
+	 * welcome page
+	 * ==================================================================================================
+      -->
+    <div id="welcome_page" class="ufpvisible">
+      <div class="container">
+	<div class="input-group">
+	  <span class="input-group-btn">
+            <button class="btn btn-default" type="button" id="btChangeUserName" onClick="welcome_page.changeUserName()" style="min-width:14em" >Change Username</button>
+	  </span>
+	  <input type="text" class="form-control" placeholder="Click the button on the left to enter a Username"  id="edUserName" readonly />
+	</div>
+      </div>
+      <div class="container">
+	<div class="input-group">
+	  <span class="input-group-btn">
+            <button class="btn btn-default" type="button" id="btChangeAccount" onClick="welcome_page.changeAccount()" style="min-width:14em;width:200px;" >Change Account</button>
+	  </span>
+	  <input type="text" class="form-control" placeholder="Click the button on the left to enter a private key for your account" id="edAccount"  readonly />
+	  <span class="input-group-btn">
+            <button class="btn btn-default" type="button" id="btQR" onClick="welcome_page.show_qr()" style="min-width:3em;width:20%;height:100%;" >
+		<img src="images/iconQRCode.png" style="left:0;top:0;width:100%;height:100%;margin:0px;" /> 
+	   </button>
+	  </span>
+
+	</div>
+      </div>
+
+      <div class="container">
+	<div class="input-group">
+	  <span class="btn btn-default" id="btRefreshBalance" disabled="true" onClick="welcome_page.refreshBalance()" style="min-width:14em" >Balance</span>
+	  <input type="text" class="form-control" placeholder="not-synced" aria-describedby="basic-addon1" id="nedBalance" readonly />
+	</div>
+      </div>
+
+
+
+
+    <!--
+      <div class="container">
+	<div class="input-group">
+	  <span class="btn btn-default btn-secondary" id="basic-addon1">Balance</span>
+	  <input type="text" class="form-control" placeholder="0.000" aria-describedby="basic-addon1" id="nedBalance" disabled="true">
+	</div>
+      </div>
+      -->
+
+      <div id="selectTableDiv" class="container">
+	<h2><p class="subheading" style="margin-top:20px" >Select Your Table!</p></h2>
+	<button id="startTableButton" type="button"  onclick="welcome_page.tableClicked(0)" class="btn btn-default btn-lg btn-block">Starter Table</button>
+	<button id="intermediateTableButton" type="button"  onclick="welcome_page.tableClicked(1)" class="btn btn-default btn-lg btn-block">Intermediate Table</button>
+	<button id="highRollerTableButton" type="button"  onclick="welcome_page.tableClicked(2)" class="btn btn-default btn-lg btn-block">High Roller Table</button>
+      </div>
+
+	<div class="container" style="position:absolute;bottom:80px;" >
+	  <div class="panel-body">
+          <div class="statustype" id="welcomeStatusTyper"></div>
+	</div>
+      </div>
+
+    </div>
+
+    <!--
+	 * ==================================================================================================
+	 * select page
+	 * ==================================================================================================
+      -->
+    <div id="select_page" class="ufphidden">
+
+    <div class="w3-container" style="color:black;"> 
+	<h2>Invite Opponent!</h2>
+	 <p>Select a player to invite for a match</p>
+	</span>
+	<div class="OpponentListDiv" >
+	<ul id="ulPlayers" class="w3-hoverable TwoColUL" >
+	</ul>
+	</div>
+     </div>
+
+
+      <div id="exitPanel" style="position:relative;margin:15px;" >
+	<button id="exit" type="button" class="btn btn-default"  onClick="select_page.exit()">
+	  <span ><i class="fa fa-arrow-left icon-large" aria-hidden="true"></i>
+	</span></button>
+      </div>
+      <div class="container">
+	<div class="panel-body">
+          <div class="statustype" id="selectStatusTyper"></div>
+	</div>
+      </div>
+
+    </div>
+
+
+
+    </div>
+
+    <!--
+	 * ==================================================================================================
+	 * play page
+	 * ==================================================================================================
+      -->
+    <div id="play_page" class="ufphidden">
+      <div id="playBoard" class="brd brdback" style="position:relative;top:1;"  >
+
+	<div id="divTimer"  style="width:100px;height:50px;display:none;position:absolute;" >
+	  <canvas id="canvasTimer" width=100 height=50></canvas>
+	</div>
+
+	<div id="remotePouch;">
+	  <img id="irpouch" style="position:absolute;width:50px;height:50px;display:none;"  />
+	  <img id="ircoin" style="position:absolute;width:50px;height:50px;display:none;"  />
+
+	  <span id="sR0" class="cardsp"><img id="iR0" style="position:absolute;width:90px;height:130px;display:none;" /> </span>
+	  <span id="sR1" class="cardsp"><img id="iR1" style="position:absolute;width:90px;height:130px;display:none;" /> </span>
+	  <span id="sR2" class="cardsp"><img id="iR2" style="position:absolute;width:90px;height:130px;display:none;" /> </span>
+	  <span id="sR3" class="cardsp"><img id="iR3" style="position:absolute;width:90px;height:130px;display:none;" /> </span>
+	  <span id="sR4" class="cardsp"><img id="iR4" style="position:absolute;width:90px;height:130px;display:none;" /> </span>
+	</div>
+
+	<div id="coinPile" style="position:absolute;display:none;" >
+	  <img id="iPile" style="position:absolute;width:50px;height:50px;"  />
+	  <span id="coinPileAmount" style="color:white;position:relative;left:50px;top:20px;">X</span>
+	</div>
+
+	<div id="localPouch" >
+	  <span id="sL0" class="cardsp"><img id="iL0" style="position:absolute;width:90px;height:130px;display:none;" onClick="play_page.discard_card(0)"/> </span>
+	  <span id="sL1" class="cardsp"><img id="iL1" style="position:absolute;width:90px;height:130px;display:none;" onClick="play_page.discard_card(1)"/> </span>
+	  <span id="sL2" class="cardsp"><img id="iL2" style="position:absolute;width:90px;height:130px;display:none;" onClick="play_page.discard_card(2)"/> </span>
+	  <span id="sL3" class="cardsp"><img id="iL3" style="position:absolute;width:90px;height:130px;display:none;" onClick="play_page.discard_card(3)"/> </span>
+	  <span id="sL4" class="cardsp"><img id="iL4" style="position:absolute;width:90px;height:130px;display:none;" onClick="play_page.discard_card(4)"/> </span>
+
+	  <div id="localCoins"  style="position:absolute;width:100px;height:100px;display:none;" >
+	    <img id="ilpouch" style="position:absolute;width:50px;height:50px;"  />&nbsp;&nbsp;
+	    <span id="lpouchAmount" style="color:white;position:relative;left:50px;top:20px;">X</span>
+	  </div>
+	  <img id="ilcoin" style="position:absolute;width:50px;height:50px;display:none;" />
+
+	  <div id="betPanel" style="position:absolute;" >
+	    <input id="betSlider" data-slider-id='ex1Slider' type="text"/>
+	    <button id="place" class='btn btn-danger' onClick="play_page.bet_place_bet()">Place Bet</button>
+	    <button id="fold" class='btn btn' onClick="play_page.bet_fold()" >Fold</button>
+	  </div>
+
+	  <div id="discardPanel" style="position:absolute;" >
+	    <button id="done" class='btn btn' onClick="play_page.discard_done()">Done</button>
+	    <button id="fold" class='btn btn' onClick="play_page.discard_fold()" >Fold</button>
+	  </div>
+	</div>
+
+	<div class="container" style="position:absolute; bottom:80px;" >
+	  <div class="panel-body">
+            <div class="statustype" id="playStatusTyper" style="position:absolute;"></div>
+	  </div>
+	</div>
+    </div>
+
+
+
+       <p id="subHeading1" class="subheading1"> Real Ether Poker using real Ether transactions. No more online casino</p> 
+      <span class="lower-footer" >
+	For FAQs, more info, questions - please go to https://unclefinneys.com
+      </span>
+
+  </body>
+</html>

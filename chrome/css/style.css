@@ -1,0 +1,43 @@
+      body {
+      font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+      font-size: 100%;
+      background: images/pokertable.jpeg
+
+      min-width: 480px;
+      min-height: 640px;
+      }
+      #title {
+        /* avoid an excessively wide status text */
+      white-space: pre;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      }
+      #status {
+        /* avoid an excessively wide status text */
+        white-space: pre;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+
+
+
+
+.statustype {
+	width:45%;  /*  450px;seems like a good number */
+	margin-bottom: 15px;
+	font-size: 22px;
+	font-weight: 200;
+	color: BLACK;
+/*	text-shadow: white 0.3em 0.3em 0.3em; */
+	word-break:  normal; /*This plus width causes word wrap break-all; */
+	word-wrap: normal; /* This also controls word wrap break-word; */
+
+}
+
+@media screen and (min-width: 768px) {
+    #type {
+        font-size: 23px;
+	  color: white;
+	  text-shadow: black 0.3em 0.3em 0.3em;
+    }
+}

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/background_graphic"
+    tools:context="com.liveplayergames.finneypoker.ShareActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/color_toolbar"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:layout_alignParentTop="true"/>
+
+<!--
+    really we don't need a wallet header.... every page show the current bakance w/o a header
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:layout_marginTop="@dimen/header_margin_top"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="Wallet"
+        android:background="@color/color_headerbar"
+        android:id="@+id/wallet_prompt"
+        android:layout_below="@id/toolbar"
+        />
+    -->
+
+<!--
+    really don't need to show the acct addr here. we can allow the user can to see it from a menu option
+    -->
+    <TextView
+        android:id="@+id/wallet_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+	android:textSize="@dimen/balance_text_size_medium"	
+        android:layout_marginTop="8dp"
+        android:singleLine="true"
+        android:text="Wallet ID"
+        android:layout_below="@id/toolbar" />
+
+    <!-- outer layout for "balance" prompt, balances (in different denominations), refresh button -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/wallet_layout"
+        android:layout_marginTop="@dimen/header_margin_top"
+        android:layout_below="@+id/wallet_id" >
+
+        <TextView
+            android:text="Balance: "
+	    android:textSize="@dimen/balance_text_size_big"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/balance_prompt" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" />
+
+        <!-- inner layout for balances (in different denominations) -->
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:text="000000 Finney"
+                android:gravity="left"
+		android:textSize="@dimen/balance_text_size_big"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:id="@+id/finney_balance" />
+
+            <TextView
+                android:text="0.000000 ETH"
+		android:textSize="@dimen/balance_text_size_medium"
+                android:gravity="left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:id="@+id/eth_balance" />
+
+            <TextView
+                android:text="0.00 USD"
+		android:textSize="@dimen/balance_text_size_small"
+                android:gravity="left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:id="@+id/usd_balance" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:text="refresh"
+            android:src="@drawable/ic_icon_refresh_128"
+            android:background="?attr/selectableItemBackground"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/refresh_button"
+            android:onClick="do_refresh"
+            android:layout_alignTop="@id/finney_balance"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:text="Payments:"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:gravity="center_vertical"		
+        android:layout_marginTop="@dimen/header_margin_top"
+        android:minHeight="@dimen/header_min_height"	
+        android:textSize="@dimen/header_text_size"	
+        android:textStyle="bold"
+        android:background="@color/color_headerbar"
+        android:id="@+id/payments_prompt"
+        android:layout_below="@id/wallet_layout" />
+
+    <Button
+        android:text="Send"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:layout_marginTop="8dp"
+        android:minHeight="@dimen/button_min_height"
+        android:textSize="@dimen/button_text_size_1line"	
+        android:id="@+id/pay_button"
+        android:onClick="do_pay"
+        android:layout_below="@id/payments_prompt"
+        android:background="@drawable/button_background"
+        />
+
+    <Button
+        android:text="Receive"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:layout_marginTop="8dp"
+        android:minHeight="@dimen/button_min_height"
+        android:textSize="@dimen/button_text_size_1line"	
+        android:id="@+id/receive_button"
+        android:onClick="do_receive"
+        android:layout_below="@id/pay_button"
+        android:background="@drawable/button_background"
+        />
+
+    <TextView
+        android:text="History:"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:gravity="center_vertical"		
+        android:layout_marginTop="@dimen/header_margin_top"
+        android:minHeight="@dimen/header_min_height"	
+        android:textSize="@dimen/header_text_size"	
+        android:textStyle="bold"
+        android:background="@color/color_headerbar"
+        android:id="@+id/history_prompt"
+        android:layout_below="@id/receive_button"
+        />
+
+    <Button
+        android:text="Sent"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:layout_marginTop="8dp"
+        android:minHeight="@dimen/button_min_height"
+        android:textSize="@dimen/button_text_size_1line"	
+        android:id="@+id/sent_button"
+        android:onClick="do_payments"
+        android:layout_below="@id/history_prompt"
+        android:background="@drawable/button_background"
+        />
+
+    <Button
+        android:text="Received"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:layout_marginTop="8dp"
+        android:minHeight="@dimen/button_min_height"
+        android:textSize="@dimen/button_text_size_1line"	
+        android:id="@+id/received_button"
+        android:onClick="do_received"
+        android:layout_below="@id/sent_button"
+        android:background="@drawable/button_background"
+        />
+
+</RelativeLayout>

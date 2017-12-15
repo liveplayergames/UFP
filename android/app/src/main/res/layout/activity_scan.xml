@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <android.support.v7.widget.Toolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      android:background="@color/color_toolbar"
+      android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+      android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+      android:layout_alignParentTop="true"/>
+
+  <TextView
+      android:id="@+id/instructions"
+      android:text=""
+      android:textSize="16sp"
+      android:layout_height="wrap_content"
+      android:layout_width="match_parent"
+      android:layout_marginLeft="22dp"
+      android:layout_marginRight="22dp"
+      android:layout_marginTop="22dp"
+      android:layout_marginBottom="22dp"
+      android:layout_below="@id/toolbar">
+  </TextView>
+
+  <FrameLayout
+    android:id="@+id/cameraPreview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+  />
+
+</LinearLayout>

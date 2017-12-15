@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title="Help"
+        android:id="@+id/help"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_help0"
+        />
+    <item android:id="@+id/alarm_challenged"
+        android:title="Alarm when Challenged"
+        android:checkable="true"
+        />
+    <item android:id="@+id/alarm_player"
+        android:title="Alarm when Player Appears"
+        android:checkable="true"
+        />
+</menu>
